@@ -1,0 +1,13 @@
+{
+    "id": "registration",
+    "name": "Manage Registration",
+    "description": "Add page on Manage Registration where can edit 4 part",
+    "keywords": [
+        "manage registration"
+    ],
+    "version": "0.1",
+    "humhub": {
+        "minVersion": "0.8"
+    },
+    "screenshots": ["assets/screen1.jpg","assets/screen2.jpg"]
+}
