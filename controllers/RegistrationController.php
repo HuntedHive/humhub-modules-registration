@@ -13,7 +13,7 @@ class RegistrationController extends Controller
      */
     public function filters()
     {
-        return array(
+        return array (
             'accessControl', // perform access control for CRUD operations
         );
     }
@@ -77,10 +77,14 @@ class RegistrationController extends Controller
     
     public function actionEdit()
     {
-        $pk = $_POST['pk'];
-        $value = $_POST['value'];
-        
-        ManageRegistration::model()->updateAll(['name' => $value], 'id=' . $pk);
+        if (isset($_POST['pk']) && isset($_POST['value'])) {
+            $pk = $_POST['pk'];
+            $value = $_POST['value'];
+
+            ManageRegistration::model()->updateAll(['name' => $value], 'id=' . $pk);
+        } else {
+            echo "Erorr of data editing";
+        }
     }
     
     public function actionDelete($id)
@@ -91,13 +95,17 @@ class RegistrationController extends Controller
     
     public function actionSort()
     {
-        $i=0;
-        foreach ($_POST['data'] as $item_id) {
-            $i--;
-            $criteria = new CDbCriteria;
-            $criteria->addCondition('type='. $_POST['type']);
-            $criteria->addCondition('id='. $item_id);
-            ManageRegistration::model()->updateAll(array('updated_at' => time() + $i), $criteria);
+        if (isset($_POST['data']) && isset($_POST['type'])) {
+            $i=0;
+            foreach ($_POST['data'] as $item_id) {
+                $i--;
+                $criteria = new CDbCriteria;
+                $criteria->addCondition('type='. $_POST['type']);
+                $criteria->addCondition('id='. $item_id);
+                ManageRegistration::model()->updateAll(array('updated_at' => time() + $i), $criteria);
+            }
+        } else {
+            echo "Erorr of data sorting";
         }
     }
 }

@@ -7,13 +7,13 @@ $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegist
 	<h5><strong>Item Name</strong></h5>
     <div class="table-scrollable">
         <table class="table table-hover">    
-            <tbody>
+            <tbody class='c_items' data-type="<?= ManageRegistration::TYPE_TEACHER_LEVEL ?>">
 				<?php
                 if (empty($levels)) {
                     echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
                 } else {
                     foreach ($levels as $level) {
-                        echo '<tr class="c_items ui-sortable" data-type="<?= ManageRegistration::TYPE_TEACHER_LEVEL; ?>"><td class="item_'.$level->id.'" style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $level->id . '" data-url="' . $this->createUrl('edit') . '">'.$level->name.'</span></td><td><a class="btn btn-danger btn-xs tt close" href="' . $this->createUrl('delete', ['id' => $level->id]) . '" title="delete item"><i class="fa fa-times"></i></a></td></tr>';
+                        echo '<tr class="ui-sortable" data-item="item_'.$level->id.'"><td  style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $level->id . '" data-url="' . $this->createUrl('edit') . '">'.$level->name.'</span></td><td><a class="btn btn-danger btn-xs tt close" href="' . $this->createUrl('delete', ['id' => $level->id]) . '" title="delete item"><i class="fa fa-times"></i></a></td></tr>';
                     }
                 }
                 ?>

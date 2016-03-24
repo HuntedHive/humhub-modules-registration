@@ -2,43 +2,56 @@
 $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegistration::TYPE_TEACHER_TYPE]. '"')->value_text;
 ?>
 <h4>Teacher Type</h4>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th id="user-grid_c0">
-                <a class="sort-link" href="">Name</a>
-            </th>
-        </tr>
-    </thead>
-    <tbody class="c_items" data-type="<?= ManageRegistration::TYPE_TEACHER_TYPE; ?>">
-        <?php
-        if (empty($types)) {
-            echo '<tr><td colspan="4" class="empty"><span class="empty">Нет результатов.</span></td></tr>';
-        } else {
-            foreach ($types as $type) {
-                echo '<tr class="item_'.$type->id.'" style="z-index:99999"><td colspan="4"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $type->id . '" data-url="' . $this->createUrl('edit') . '">' . $type->name . '</span><a class="close" href="' . $this->createUrl('delete', ['id' => $type->id]) . '">x</a></td></tr>';
-            }
-        }
-        ?>
-    </tbody>
-</table>
-<div class="form">
+
+<div class="table-responsive">
+	<h5><strong>Item Name</strong></h5>
+    <div class="table-scrollable">
+        <table class="table table-hover">    
+            <tbody class='c_items' data-type="<?= ManageRegistration::TYPE_TEACHER_TYPE ?>">
+				<?php
+                if (empty($types)) {
+                    echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
+                } else {
+                    foreach ($types as $type) {
+                        echo '<tr class="ui-sortable" data-item="item_'.$type->id.'"><td style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $type->id . '" data-url="' . $this->createUrl('edit') . '">'.$type->name.'</span></td><td><a class="btn btn-danger btn-xs tt close" href="' . $this->createUrl('delete', ['id' => $type->id]) . '" title="delete item"><i class="fa fa-times"></i></a></td></tr>';
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+          
+<div class="form form-registration-items">
     <?php echo CHtml::beginForm(['action' => '', 'method' => 'post']); ?>
     <?php echo CHtml::activeHiddenField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'type', ['value' => ManageRegistration::TYPE_TEACHER_TYPE]); ?>
-        <?php echo CHtml::activeHiddenField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'default', ['value' => ManageRegistration::DEFAULT_ADDED]); ?>
-    <div class="row pull-left col-lg-4">
-<?php echo CHtml::activeTextField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'name'); ?>
+    <?php echo CHtml::activeHiddenField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'default', ['value' => ManageRegistration::DEFAULT_ADDED]); ?>
+    <div class="row controls">
+        <div class="col-xs-12">
+                <?php echo CHtml::errorSummary($model[ManageRegistration::TYPE_TEACHER_TYPE], '', ''); ?>
+        </div>
+        <div class="col-sm-6">
+            <?php echo CHtml::activeTextField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'name', array('class' => 'form-control input-sm', 'placeholder' => 'Enter item name',)); ?>
+            <button type="submit" name="btn" class="btn btn-primary btn-sm">
+                <i class="fa fa-plus"></i> add item
+            </button>
+        </div>
+
+        <div class="col-sm-6">
+        	<div class="checkbox regular-checkbox-container pull-right">
+                <label>
+                    <a href='<?= $this->createUrl('type', ['type' => ManageRegistration::TYPE_TEACHER_TYPE]) ?>' data-method='post'>
+                        <input class="regular-checkbox" type='checkbox' <?= $flag?"checked":"" ?>/> add 'other' option to list
+                        <div class="regular-checkbox-box"></div>
+                    </a>
+                </label>
+                <div class="regular-checkbox-clear"></div>
+            </div>
+        </div>
     </div>
-    <div class="row submit pull-left col-lg-4">
-        <input type="submit" name="btn" class="btn btn-primary" />
-    </div>
-    <div class="row submit pull-left col-lg-4">
-        <a href='<?= $this->createUrl('type', ['type' => ManageRegistration::TYPE_TEACHER_TYPE]) ?>' data-method='post'>
-            <input type='checkbox' <?= $flag?"checked":"" ?>/> add 'other' option to list
-        </a>
-    </div>
-    <div class='row pull-left col-lg-12'>
-            <?php echo CHtml::errorSummary($model[ManageRegistration::TYPE_TEACHER_TYPE], '', ''); ?>
-    </div>
-<?php echo CHtml::endForm(); ?>
+	<?php echo CHtml::endForm(); ?>
 </div>
+
+<hr class="hr-spacer">
+
