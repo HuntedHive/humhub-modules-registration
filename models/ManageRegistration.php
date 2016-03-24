@@ -90,7 +90,7 @@ class ManageRegistration extends HActiveRecord
     {
         $data = $this->model()->findAll('type='.$this->type . ' AND name="'.$this->name .'"');
         if (!empty($data)) {
-            $this->addError("name", "Name is unique");
+            $this->addError("name", "Item name must be unique");
         }
         
         return true;

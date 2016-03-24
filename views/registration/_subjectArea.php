@@ -1,7 +1,7 @@
 <?php 
 $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA]. '"')->value_text;
 ?>
-<h3>Teacher Subject Area</h3>
+<h4>Teacher Subject Area</h4>
 <table class="table table-hover">
     <thead>
         <tr>
