@@ -4,7 +4,20 @@ $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegist
 <h4>Teacher Level</h4>
 
 <div class="table-responsive">
-	<h5><strong>Item Name</strong></h5>
+	<div class="row no-margin">
+    	<div class="col-xs-6 no-padding">
+			<h5><strong>Item Name</strong></h5>                     
+    	</div>
+        <div class="col-xs-6 no-padding">
+            <div class="checkbox regular-checkbox-container pull-right checkbox-required">
+                <label>
+                    <input class="regular-checkbox" type='checkbox' value="checkbox-required-teacherlevel"/> required field
+                    <div class="regular-checkbox-box"></div>
+                </label>
+                <div class="regular-checkbox-clear"></div>
+            </div>
+      	</div>
+    </div>
     <div class="table-scrollable">
         <table class="table table-hover">    
             <tbody class='c_items' data-type="<?= ManageRegistration::TYPE_TEACHER_LEVEL ?>">
