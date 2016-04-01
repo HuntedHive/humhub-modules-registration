@@ -8,7 +8,7 @@ class RegistrationModule extends HWebModule{
     {
 
         $this->setImport(array(
-            'registration.models.*',
+           'registration.models.*',
         ));
     }
     
