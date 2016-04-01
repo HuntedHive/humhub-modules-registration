@@ -3,6 +3,14 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <style>
+	.no-padding{
+		padding:0px;
+	}
+	
+	.no-margin{
+		margin:0px;
+	}
+
     .grid-view table tbody tr {
         margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; 
     }
@@ -25,6 +33,10 @@
     .table=scrollable .fa {
             margin-right:10px;
     }
+	
+	.table-responsive{
+		border:none;
+	}
 
     .form-registration-items input {
             margin-right: 10px; 
@@ -35,7 +47,7 @@
             float:left;
     }
 
-    .form-registration-items .checkbox {
+    .form-registration-items .checkbox, .checkbox-required {
             margin-right: 20px;
     }
 
@@ -80,7 +92,7 @@
     @media (max-width: 767px) {
             .form-registration-items .checkbox.pull-right{
                     float:left !important;
-                    margin-top:20px !important;
+                    margin-top:10px !important;
                     margin-bottom:10px;
             }
 
