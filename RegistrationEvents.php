@@ -18,7 +18,7 @@ class RegistrationEvents {
             'sortOrder' => 10000,
             'group' => 'manage',
             'newItemCount' => 0,
-            'isActive' => (Yii::app()->controller->module && Yii::app()->controller->module->id == 'admin' && Yii::app()->controller->id == 'registration'),
+            'isActive' => (Yii::app()->controller->module && Yii::app()->controller->module->id == 'registration' && Yii::app()->controller->id == 'registration'),
             'isVisible' => Yii::app()->user->isAdmin(),
         ));
     }
