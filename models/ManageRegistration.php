@@ -22,6 +22,11 @@ class ManageRegistration extends HActiveRecord
         self::TYPE_TEACHER_INTEREST => 'teacher_interest',
     ];
     
+    public $teacher_level;
+    public $teacher_type;
+    public $subject_area;
+    public $teacher_interest;
+    
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -53,7 +58,7 @@ class ManageRegistration extends HActiveRecord
             ['name','uniqueMethod'],
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array(array('module_id','sort_at'), 'safe'),
+            array(array('module_id','sort_at','depend'), 'safe'),
         );
     }
 
@@ -86,5 +91,18 @@ class ManageRegistration extends HActiveRecord
         return array(
             //'module_id' => 'Module',
         );
+    }
+
+    public static function getTeachetTypeDropDownList()
+    {
+        return CHtml::listData(self::model()->findAll('type=' .self::TYPE_TEACHER_TYPE), 'id', 'name');
+    }
+
+    public static function getDependName($id) {
+        if($id == 0) {
+            return "None";
+        }
+        
+        return self::model()->find('id='.$id)->name;
     }
 }

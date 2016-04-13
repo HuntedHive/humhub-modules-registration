@@ -5,10 +5,13 @@ $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegist
 
 <div class="table-responsive">
 	<div class="row no-margin">
-    	<div class="col-xs-6 no-padding">
+    	<div class="col-xs-5 no-padding">
 			<h5><strong>Item Name</strong></h5>                     
     	</div>
-        <div class="col-xs-6 no-padding">
+        <div class="col-xs-3 no-padding">
+            <h5><strong>Depend</strong></h5>
+        </div>
+        <div class="col-xs-4 no-padding">
             <div class="checkbox regular-checkbox-container pull-right checkbox-required">
                 <label>
                     <input class="regular-checkbox" type='checkbox' value="checkbox-required-subjectarea"/> required field
@@ -26,7 +29,7 @@ $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegist
                     echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
                 } else {
                     foreach ($subjects as $subject) {
-                        echo '<tr class="ui-sortable" data-item="item_'.$subject->id.'"><td style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $subject->id . '" data-url="' . $this->createUrl('edit') . '">'.$subject->name.'</span></td><td><a class="btn btn-danger btn-xs tt close" href="' . $this->createUrl('delete', ['id' => $subject->id]) . '" title="delete item"><i class="fa fa-times"></i></a></td></tr>';
+                        echo '<tr class="ui-sortable" data-item="item_'.$subject->id.'"><td style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $subject->id . '" data-url="' . $this->createUrl('edit') . '">'.$subject->name.'</span></td><td>' . ManageRegistration::getDependName($subject->depend) . '</td><td><a class="btn btn-danger btn-xs tt close" href="' . $this->createUrl('delete', ['id' => $subject->id]) . '" title="delete item"><i class="fa fa-times"></i></a></td></tr>';
                     }
                 }
                 ?>
@@ -46,6 +49,7 @@ $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegist
         </div>
         <div class="col-sm-6">
             <?php echo CHtml::activeTextField($model[ManageRegistration::TYPE_SUBJECT_AREA], 'name', array('class' => 'form-control input-sm', 'placeholder' => 'Enter item name',)); ?>
+            <?php echo CHtml::activeDropDownList($model[ManageRegistration::TYPE_SUBJECT_AREA], 'depend', ManageRegistration::getTeachetTypeDropDownList() , array('class' => 'form-control input')); ?>
             <button type="submit" name="btn" class="btn btn-primary btn-sm">
                 <i class="fa fa-plus"></i> add item
             </button>

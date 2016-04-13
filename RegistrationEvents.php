@@ -13,7 +13,7 @@ class RegistrationEvents {
          */
         $event->sender->addItem(array(
             'label' => Yii::t('AdminModule.widgets_AdminMenuWidget', 'Registration'),
-            'url' => Yii::app()->createUrl('registration/registration/index'),
+            'url' => Yii::app()->createUrl('/registration/registration/index'),
             'icon' => '<i class="fa fa-user-plus"></i>',
             'sortOrder' => 10000,
             'group' => 'manage',
