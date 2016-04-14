@@ -113,10 +113,10 @@
                 for(var i=0; i<data.length;i++) {
                     items[i] = (data[i].dataset.item).split('_')[1];
                 }
-
+                console.log(items);
                 $.ajax({
                     type: 'POST',
-                    url: window.location.href.split('?')[0]+"?r=registration/registration/sort",
+                    url: '<?= Yii::app()->createUrl("/registration/registration/sort") ?>',
                     data: {'data':items,'type':type},
                     success: function(data) {
                     }
@@ -164,6 +164,12 @@
             	<div class="col-xs-12">
                 	<?php $this->renderPartial("_teacherInterests", ['model' => $model, 'interests' => $interests]) ?>
             	</div>
+            </div>
+
+            <div class='row'>
+                <div class="col-xs-12">
+                    <?php $this->renderPartial("_teacherOther", ['model' => $model, 'others' => $others]) ?>
+                </div>
             </div>
         </div>
     </div>

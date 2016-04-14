@@ -6,6 +6,7 @@ class ManageRegistration extends HActiveRecord
     const TYPE_TEACHER_TYPE = 1;
     const TYPE_SUBJECT_AREA = 2;
     const TYPE_TEACHER_INTEREST = 3;
+    const TYPE_TEACHER_OTHER = 4;
     
     const DEFAULT_DEFAULT = 0;
     const DEFAULT_ADDED = 1;
@@ -20,12 +21,14 @@ class ManageRegistration extends HActiveRecord
         self::TYPE_TEACHER_TYPE => 'teacher_type',
         self::TYPE_SUBJECT_AREA => 'subject_area',
         self::TYPE_TEACHER_INTEREST => 'teacher_interest',
+        self::TYPE_TEACHER_OTHER => 'teacher_other',
     ];
     
     public $teacher_level;
     public $teacher_type;
     public $subject_area;
     public $teacher_interest;
+    public $teacher_other;
     
     /**
      * Returns the static model of the specified AR class.

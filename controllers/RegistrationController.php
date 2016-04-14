@@ -48,7 +48,7 @@ class RegistrationController extends Controller
         foreach(ManageRegistration::$type as $key => $value) {
             $setting[$key] = HSetting::model()->find('value="' . $value . '"');
         }
-        
+
         if (\Yii::app()->request->isPostRequest) {
             $model[$_POST['ManageRegistration']['type']]->attributes = $_POST['ManageRegistration'];
             $model[$_POST['ManageRegistration']['type']]->save();
@@ -58,12 +58,14 @@ class RegistrationController extends Controller
         $types = ManageRegistration::model()->findAll('type = ' . ManageRegistration::TYPE_TEACHER_TYPE . (!$setting[ManageRegistration::TYPE_TEACHER_TYPE]->value_text?' AND `default`='. ManageRegistration::DEFAULT_ADDED:"") . " ORDER BY updated_at DESC");
         $subjects = ManageRegistration::model()->findAll('type = ' . ManageRegistration::TYPE_SUBJECT_AREA . (!$setting[ManageRegistration::TYPE_SUBJECT_AREA]->value_text?' AND `default`='. ManageRegistration::DEFAULT_ADDED:"") . " ORDER BY updated_at DESC");
         $interests = ManageRegistration::model()->findAll('type = ' . ManageRegistration::TYPE_TEACHER_INTEREST . (!$setting[ManageRegistration::TYPE_TEACHER_INTEREST]->value_text?' AND `default`='. ManageRegistration::DEFAULT_ADDED:"") . " ORDER BY updated_at DESC");
+        $others = ManageRegistration::model()->findAll('type = ' . ManageRegistration::TYPE_TEACHER_OTHER . (!$setting[ManageRegistration::TYPE_TEACHER_OTHER]->value_text?' AND `default`='. ManageRegistration::DEFAULT_ADDED:"") . " ORDER BY updated_at DESC");
 
         $this->render('index', [
             'levels' => $levels,
             'types' => $types,
             'subjects' => $subjects,
             'interests' => $interests,
+            'others' => $others,
             'model' => $model,
         ]);
     }
