@@ -2,9 +2,6 @@
 $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA]. '"')->value_text;
 ?>
 
-<link rel="stylesheet" type="text/css"
-         href="<?php echo $this->module->assetsUrl; ?>/css/registration.css"/>
-
 <h4>Teacher Subject Area</h4>
 
 <div class="table-responsive">
