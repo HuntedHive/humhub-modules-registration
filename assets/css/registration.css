@@ -1,0 +1,123 @@
+/*
+HumHub Registration Module Style CSS
+*/
+
+.no-padding{
+		padding:0px;
+	}
+	
+	.no-margin{
+		margin:0px;
+	}
+
+    .grid-view table tbody tr {
+        margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; 
+    }
+
+    .gets {
+        border:1px solid black;
+        height:100px;
+        background: red;
+        position: relative;
+    }
+
+    .table-scrollable {
+            overflow-x: hidden; 
+            overflow-y: scroll; 
+            height: 120px; 
+            width: 100%;
+            display:block;
+    }
+
+    .table=scrollable .fa {
+            margin-right:10px;
+    }
+	
+	.table-responsive{
+		border:none;
+	}
+
+    .form-registration-items input {
+            margin-right: 10px; 
+            padding-top: 6px;
+            padding-bottom: 6px;
+            height: auto;
+            width:auto;
+            float:left;
+			margin-bottom:5px;
+    }
+
+    .form-registration-items .checkbox, .checkbox-required {
+            margin-right: 20px;
+    }
+
+    .form-registration-items .checkbox.pull-right {
+            float:right;
+            margin-top:0px;
+            margin-bottom:0px;
+    }
+
+    .form-registration-items .controls {
+            margin-top:10px;
+    }
+	
+	.form-registration-items .btn-sm{
+		padding: 8px 8px;
+	}
+
+    .ui-sortable {
+            cursor:pointer;
+    }
+
+    .ui-sortable .close {
+            padding: 3px 5px;
+            font-size: 11px;
+            opacity:1;
+            margin-right:10px;
+    }
+
+    .ui-sortable .dragdrop {
+            margin-right:10px;
+    }
+
+    .errorSummary {
+            color:#dc4226;
+    }
+
+    .errorSummary ul {
+            padding-left: 0px;
+            list-style: none;
+    }
+
+    .hr-spacer {
+            margin:30px 0px;
+    }
+
+	.selectpicker-tags .bootstrap-select{
+		width:auto;
+		max-width:250px;
+		margin-right: 10px;
+	}
+	
+	.selectpicker-tags .bootstrap-select .dropdown-toggle{
+		font-size: 12px;
+		padding: 5px 10px 0px;
+	}
+	
+	.selectpicker-tags .bootstrap-select.btn-group .dropdown-toggle .filter-option {
+		padding: 4px 0px 7px 0px;
+	}
+	
+	.ui-sortable .label-success{
+		margin-right:3px;
+	}
+
+    @media (max-width: 767px) {
+            .form-registration-items .checkbox.pull-right{
+                    float:left !important;
+                    margin-top:10px !important;
+                    margin-bottom:10px;
+            }
+
+    }
+
