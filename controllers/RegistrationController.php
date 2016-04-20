@@ -41,22 +41,47 @@ class RegistrationController extends Controller
         $model  = [];
         $keys = array_keys(ManageRegistration::$type);
         $setting = [];
-        foreach ($keys as $key) {
+            foreach ($keys as $key) {
             $model[$key] = new ManageRegistration;
         }
-        
+
         foreach(ManageRegistration::$type as $key => $value) {
             $setting[$key] = HSetting::model()->find('value="' . $value . '"');
         }
 
         if (\Yii::app()->request->isPostRequest) {
-            $model[$_POST['ManageRegistration']['type']]->attributes = $_POST['ManageRegistration'];
-            $model[$_POST['ManageRegistration']['type']]->save();
+            if($_POST['ManageRegistration']['type'] == ManageRegistration::TYPE_SUBJECT_AREA) {
+                if(!empty($_POST['ManageRegistration']['subjectarea']) && is_array($_POST['ManageRegistration']['subjectarea']) && !empty($_POST['ManageRegistration']['name'])) {
+                    foreach ($_POST['ManageRegistration']['subjectarea'] as $select) {
+                        $m_reg = new ManageRegistration;
+                        $m_reg->attributes = $_POST['ManageRegistration'];
+                        $m_reg->depend = $select;
+                        $m_reg->save(false);
+
+                    }
+                    return $this->redirect("index");
+                } else {
+                    if(empty($_POST['ManageRegistration']['name'])) {
+                        $model[$_POST['ManageRegistration']['type']]->addError("name", "Enter name");
+                    }
+
+                    if(empty($_POST['ManageRegistration']['subjectarea'])) {
+                        $model[$_POST['ManageRegistration']['type']]->addError("name", "Empty select data");
+                    }
+                }
+
+            } else {
+                $model[$_POST['ManageRegistration']['type']]->attributes = $_POST['ManageRegistration'];
+                $model[$_POST['ManageRegistration']['type']]->save();
+            }
         }
-        
+
+        $criteria = new CDbCriteria;
+        $criteria->condition = 'type = ' . ManageRegistration::TYPE_SUBJECT_AREA . (!$setting[ManageRegistration::TYPE_SUBJECT_AREA]->value_text?' AND `default`='. ManageRegistration::DEFAULT_ADDED:"") . " GROUP BY name ORDER BY updated_at DESC";
+
         $levels = ManageRegistration::model()->findAll('type = ' . ManageRegistration::TYPE_TEACHER_LEVEL . (!($setting[ManageRegistration::TYPE_TEACHER_LEVEL]->value_text)?' AND `default`='. ManageRegistration::DEFAULT_ADDED:"") . " ORDER BY updated_at DESC");
         $types = ManageRegistration::model()->findAll('type = ' . ManageRegistration::TYPE_TEACHER_TYPE . (!$setting[ManageRegistration::TYPE_TEACHER_TYPE]->value_text?' AND `default`='. ManageRegistration::DEFAULT_ADDED:"") . " ORDER BY updated_at DESC");
-        $subjects = ManageRegistration::model()->findAll('type = ' . ManageRegistration::TYPE_SUBJECT_AREA . (!$setting[ManageRegistration::TYPE_SUBJECT_AREA]->value_text?' AND `default`='. ManageRegistration::DEFAULT_ADDED:"") . " ORDER BY updated_at DESC");
+        $subjects = ManageRegistration::model()->findAll($criteria);
         $interests = ManageRegistration::model()->findAll('type = ' . ManageRegistration::TYPE_TEACHER_INTEREST . (!$setting[ManageRegistration::TYPE_TEACHER_INTEREST]->value_text?' AND `default`='. ManageRegistration::DEFAULT_ADDED:"") . " ORDER BY updated_at DESC");
         $others = ManageRegistration::model()->findAll('type = ' . ManageRegistration::TYPE_TEACHER_OTHER . (!$setting[ManageRegistration::TYPE_TEACHER_OTHER]->value_text?' AND `default`='. ManageRegistration::DEFAULT_ADDED:"") . " ORDER BY updated_at DESC");
 
@@ -72,8 +97,15 @@ class RegistrationController extends Controller
 
     public function actionType($type)
     {
-        $model = HSetting::model()->find('value="'.ManageRegistration::$type[$type]. '"');
-        HSetting::model()->updateAll(['value_text' => !$model->value_text?1:0], 'value="'.ManageRegistration::$type[$type]. '"');
+        $model = HSetting::model()->find('name="type_manage" AND value="'.ManageRegistration::$type[$type]. '"');
+        HSetting::model()->updateAll(['value_text' => !$model->value_text?1:0], 'name = "type_manage" AND value="'.ManageRegistration::$type[$type]. '"');
+        $this->redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    public function actionRequired($required)
+    {
+        $model = HSetting::model()->find('name="required_manage" AND value="'.ManageRegistration::$type[$required]. '"');
+        HSetting::model()->updateAll(['value_text' => !$model->value_text?1:0], 'name = "required_manage" AND value="'.ManageRegistration::$type[$required]. '"');
         $this->redirect($_SERVER['HTTP_REFERER']);
     }
     

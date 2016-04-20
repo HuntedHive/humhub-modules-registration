@@ -1,5 +1,6 @@
 <?php 
-$flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA]. '"')->value_text;
+$flag = HSetting::model()->find('name = "type_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA]. '"')->value_text;
+$required = HSetting::model()->find('name = "required_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA]. '"')->value_text;
 ?>
 
 <h4>Teacher Subject Area</h4>
@@ -15,8 +16,10 @@ $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegist
         <div class="col-xs-4 no-padding">
             <div class="checkbox regular-checkbox-container pull-right checkbox-required">
                 <label>
-                    <input class="regular-checkbox" type='checkbox' value="checkbox-required-subjectarea"/> required field
-                    <div class="regular-checkbox-box"></div>
+                    <a href='<?= $this->createUrl('required', ['required' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
+                        <input class="regular-checkbox" type='checkbox' value="checkbox-required-subjectarea" <?= $required?"checked":"" ?>/> required field
+                        <div class="regular-checkbox-box"></div>
+                    </a>
                 </label>
                 <div class="regular-checkbox-clear"></div>
             </div>
@@ -30,7 +33,22 @@ $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegist
                     echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
                 } else {
                     foreach ($subjects as $subject) {
-                        echo '<tr class="ui-sortable" data-item="item_'.$subject->id.'"><td class="col-sm-4" style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $subject->id . '" data-url="' . $this->createUrl('edit') . '">'.$subject->name.'</span></td><td class="col-sm-6"><span class="label label-success">' . ManageRegistration::getDependName($subject->depend) . '</span></td><td class="col-sm-2"><a class="btn btn-danger btn-xs tt close" href="' . $this->createUrl('delete', ['id' => $subject->id]) . '" title="delete item"><i class="fa fa-times"></i></a></td></tr>';
+                        echo '<tr class="ui-sortable" data-item="item_'.$subject->id.'">
+                                <td class="col-sm-4" style="z-index:99999;">
+                                    <i class="fa fa-bars dragdrop"></i>
+                                    <span class="m_item" data-pk="' . $subject->id . '" data-url="' . $this->createUrl('edit') . '">
+                                        '.$subject->name.'
+                                    </span>
+                                </td>
+                                <td class="col-sm-6">'
+                                        . ManageRegistration::getDependNames($subject->name) .
+                                '</td>
+                                <td class="col-sm-2">
+                                    <a class="btn btn-danger btn-xs tt close" href="' . $this->createUrl('delete', ['id' => $subject->id]) . '" title="delete item">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+                              </tr>';
                     }
                 }
                 ?>
@@ -47,11 +65,15 @@ $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegist
         <div class="col-md-8 selectpicker-tags">
             <?php echo CHtml::activeTextField($model[ManageRegistration::TYPE_SUBJECT_AREA], 'name', array('class' => 'form-control input-sm pull-left', 'placeholder' => 'Enter item name',)); ?>
             <!-- Existing Selectbox <?php echo CHtml::activeDropDownList($model[ManageRegistration::TYPE_SUBJECT_AREA], 'depend', ManageRegistration::getTeachetTypeDropDownList() , array('class' => 'form-control input-sm selectpicker show-tick pull-left')); ?> -->
-            <select name="subjectarea" class="selectpicker form-control show-tick input-sm pull-left" multiple title="Select related teacher type(s)...">
+            <select name="ManageRegistration[subjectarea][]" class="selectpicker form-control show-tick input-sm pull-left" multiple title="Select related teacher type(s)...">
                 <optgroup label="Select related teacher type(s)">
-                  <option  data-content="<span class='label label-success'>primary school</span>">primary school</option>
-                  <option  data-content="<span class='label label-success'>high school</span>">high school</option>
-                  <option  data-content="<span class='label label-success'>other</span>">other</option>
+<!--                  <option  data-content="<span class='label label-success'>primary school</span>">primary school</option>-->
+<!--                  <option  data-content="<span class='label label-success'>high school</span>">high school</option>-->
+<!--                  <option  data-content="<span class='label label-success'>other</span>">other</option>-->
+                    <?php foreach (ManageRegistration::model()->findAll("type=" . ManageRegistration::TYPE_TEACHER_TYPE) as $item) {
+                        echo "<option  data-content=$item->name>$item->id</option>";
+                    }
+                    ?>
                 </optgroup>
             </select>
 

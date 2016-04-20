@@ -18,8 +18,13 @@ class m150617_104142_initial extends EDbMigration
         );
 
         foreach (ManageRegistration::$type as $key => $value) {
-            HSetting::SetText('type_manage', $value);
-            HSetting::SetText('type_manage', 0);
+            if(empty(HSetting::model()->find("name='type_manage' AND value = '$value'"))) {
+                $setting = new HSetting;
+                $setting->name = "type_manage";
+                $setting->value = $value;
+                $setting->value_text = 0;
+                $setting->save(false);
+            }
         }
     }
 

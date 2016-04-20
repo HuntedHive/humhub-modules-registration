@@ -101,11 +101,32 @@ class ManageRegistration extends HActiveRecord
         return CHtml::listData(self::model()->findAll('type=' .self::TYPE_TEACHER_TYPE), 'id', 'name');
     }
 
-    public static function getDependName($id) {
-        if($id == 0) {
+    public static function getDependNames($name) {
+        if(empty($name)) {
             return "None";
         }
         
-        return self::model()->find('id='.$id)->name;
+        return self::toDependNames(self::model()->findAll('name="'. $name . '"'));
     }
+
+    protected static function toDependNames($dependArray)
+    {
+        $html = '';
+        foreach ($dependArray as $item) {
+            $html.= '<span class="label label-success">';
+            if(!empty($item->depend)) {
+                $html .= self::model()->find("id=" . $item->depend)->name;
+            } else {
+                //$html .= "None";
+            }
+            $html.= '</span>';
+        }
+
+        if(empty($html)) {
+            $html.= '<span class="label label-success">None</span>';
+        }
+
+        return $html;
+    }
+
 }

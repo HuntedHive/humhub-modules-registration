@@ -1,5 +1,6 @@
 <?php 
-$flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegistration::TYPE_TEACHER_INTEREST]. '"')->value_text;
+$flag = HSetting::model()->find('name = "type_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_TEACHER_INTEREST]. '"')->value_text;
+$required = HSetting::model()->find('name = "required_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_TEACHER_INTEREST]. '"')->value_text;
 ?>
 <h4>Teacher Interests</h4>
 
@@ -11,8 +12,10 @@ $flag = HSetting::model()->find('value="'.ManageRegistration::$type[ManageRegist
         <div class="col-xs-6 no-padding">
             <div class="checkbox regular-checkbox-container pull-right checkbox-required">
                 <label>
-                    <input class="regular-checkbox" type='checkbox' value="checkbox-required-teacherinterests"/> required field
-                    <div class="regular-checkbox-box"></div>
+                    <a href='<?= $this->createUrl('required', ['required' => ManageRegistration::TYPE_TEACHER_INTEREST]) ?>' data-method='post'>
+                        <input class="regular-checkbox" type='checkbox' value="checkbox-required-teacherinterests" <?= $required?"checked":"" ?>/> required field
+                        <div class="regular-checkbox-box"></div>
+                    </a>
                 </label>
                 <div class="regular-checkbox-clear"></div>
             </div>
