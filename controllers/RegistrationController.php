@@ -126,6 +126,12 @@ class RegistrationController extends Controller
         ManageRegistration::model()->deleteByPk($id);
         $this->redirect($_SERVER['HTTP_REFERER']);
     }
+
+    public function actionDeleteSubject($name)
+    {
+        ManageRegistration::model()->deleteAll('name="'. $name . '"');
+        $this->redirect($_SERVER['HTTP_REFERER']);
+    }
     
     public function actionSort()
     {

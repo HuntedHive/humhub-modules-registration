@@ -44,7 +44,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                                         . ManageRegistration::getDependNames($subject->name) .
                                 '</td>
                                 <td class="col-sm-2">
-                                    <a class="btn btn-danger btn-xs tt close" href="' . $this->createUrl('delete', ['id' => $subject->id]) . '" title="delete item">
+                                    <a class="btn btn-danger btn-xs tt close" href="' . $this->createUrl('deleteSubject', ['name' => $subject->name]) . '" title="delete item">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>
