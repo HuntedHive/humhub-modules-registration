@@ -16,6 +16,7 @@ class m160426_121143_create_manage_registration extends EDbMigration
 		], ''
 		);
 
+		Yii::import("application.modules.registration.models.ManageRegistration");
 		foreach (ManageRegistration::$type as $key => $value) {
 			if(empty(HSetting::model()->find("name='type_manage' AND value = '$value'"))) {
 				$setting = new HSetting;
@@ -29,8 +30,7 @@ class m160426_121143_create_manage_registration extends EDbMigration
 
 	public function down()
 	{
-		echo "m160426_121143_create_manage_registration does not support migration down.\n";
-		return false;
+		$this->dropTable("manage_registration");
 	}
 
 	/*

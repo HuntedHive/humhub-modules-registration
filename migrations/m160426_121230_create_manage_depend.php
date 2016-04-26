@@ -5,7 +5,8 @@ class m160426_121230_create_manage_depend extends EDbMigration
 	public function up()
 	{
 		$this->addColumn("manage_registration", "depend", "INT(11) NOT NULL DEFAULT '0'");
-
+		
+		Yii::import("application.modules.registration.models.ManageRegistration");
 		foreach (ManageRegistration::$type as $key => $value) {
 			if(empty(HSetting::model()->find("name='required_manage' AND value = '$value'"))) {
 				$setting = new HSetting;
@@ -19,8 +20,7 @@ class m160426_121230_create_manage_depend extends EDbMigration
 
 	public function down()
 	{
-		echo "m160426_121230_create_manage_depend does not support migration down.\n";
-		return false;
+		$this->dropColumn("manage_registration", "depend");
 	}
 
 	/*
