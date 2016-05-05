@@ -106,7 +106,8 @@ class ManageRegistration extends HActiveRecord
             return "None";
         }
         
-        return self::toDependNames(self::model()->findAll('name="'. $name . '"'));
+        $otherOption = (!HSetting::model()->find("value='" . ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA] . "' AND name='type_manage'")->value_text)?' AND t.default='.ManageRegistration::DEFAULT_ADDED:"";
+        return self::toDependNames(self::model()->findAll('name="'. $name . '"' . $otherOption));
     }
 
     protected static function toDependNames($dependArray)
@@ -128,5 +129,4 @@ class ManageRegistration extends HActiveRecord
 
         return $html;
     }
-
 }

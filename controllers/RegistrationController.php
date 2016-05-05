@@ -46,10 +46,10 @@ class RegistrationController extends Controller
         }
 
         foreach(ManageRegistration::$type as $key => $value) {
-            $setting[$key] = HSetting::model()->find('value="' . $value . '"');
+            $setting[$key] = HSetting::model()->find('value="' . $value . '"' . " AND name='type_manage'");
         }
 
-        if (\Yii::app()->request->isPostRequest) {
+        if (\Yii::app()->request->isPostRequest && !empty($_POST['ManageRegistration'])) {
             if($_POST['ManageRegistration']['type'] == ManageRegistration::TYPE_SUBJECT_AREA) {
                 if(!empty($_POST['ManageRegistration']['subjectarea']) && is_array($_POST['ManageRegistration']['subjectarea']) && !empty($_POST['ManageRegistration']['name'])) {
                     foreach ($_POST['ManageRegistration']['subjectarea'] as $select) {
@@ -57,7 +57,6 @@ class RegistrationController extends Controller
                         $m_reg->attributes = $_POST['ManageRegistration'];
                         $m_reg->depend = $select;
                         $m_reg->save(false);
-
                     }
                     return $this->redirect("index");
                 } else {
@@ -73,7 +72,12 @@ class RegistrationController extends Controller
             } else {
                 $model[$_POST['ManageRegistration']['type']]->attributes = $_POST['ManageRegistration'];
                 $model[$_POST['ManageRegistration']['type']]->save();
+                if(!$model[$_POST['ManageRegistration']['type']]->hasErrors()) {
+                    return $this->redirect("index");
+                }
             }
+
+
         }
 
         $criteria = new CDbCriteria;
@@ -92,6 +96,7 @@ class RegistrationController extends Controller
             'interests' => $interests,
             'others' => $others,
             'model' => $model,
+            'setting' => $setting,
         ]);
     }
 
