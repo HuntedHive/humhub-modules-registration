@@ -97,11 +97,27 @@ HumHub Registration Module Style CSS
 		width:auto;
 		max-width:250px;
 		margin-right: 10px;
+		height:auto;
 	}
 	
 	.selectpicker-tags .bootstrap-select .dropdown-toggle{
 		font-size: 12px;
 		padding: 5px 10px 0px;
+		height:auto;
+		white-space:normal;
+		line-height:1;
+	}
+	
+	.selectpicker-tags .bootstrap-select .dropdown-toggle .filter-option{
+		padding-bottom:0px !important;
+	}
+	
+	.bootstrap-select.btn-group .dropdown-toggle .caret {
+		top:16px;
+	}
+	
+	.selectpicker-tags .bootstrap-select .dropdown-menu.open{
+		z-index:100000;
 	}
 	
 	.selectpicker-tags .bootstrap-select.btn-group .dropdown-toggle .filter-option {
