@@ -58,7 +58,7 @@ class RegistrationController extends Controller
                         $m_reg->depend = $select;
                         $m_reg->save(false);
                     }
-                    return $this->redirect("index");
+                    return $this->redirect("registration/index");
                 } else {
                     if(empty($_POST['ManageRegistration']['name'])) {
                         $model[$_POST['ManageRegistration']['type']]->addError("name", "Enter name");
@@ -73,7 +73,7 @@ class RegistrationController extends Controller
                 $model[$_POST['ManageRegistration']['type']]->attributes = $_POST['ManageRegistration'];
                 $model[$_POST['ManageRegistration']['type']]->save();
                 if(!$model[$_POST['ManageRegistration']['type']]->hasErrors()) {
-                    return $this->redirect("index");
+                    return $this->redirect("registration/index");
                 }
             }
 
