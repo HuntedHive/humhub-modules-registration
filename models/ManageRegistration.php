@@ -10,7 +10,9 @@ class ManageRegistration extends HActiveRecord
     
     const DEFAULT_DEFAULT = 0;
     const DEFAULT_ADDED = 1;
-    
+
+    const VAR_OTHER = 'other';
+
     public static $default = [
         self::DEFAULT_DEFAULT => 'Default',
         self::DEFAULT_ADDED => 'Added',

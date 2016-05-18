@@ -134,7 +134,9 @@ class RegistrationController extends Controller
 
     public function actionDeleteSubject($name)
     {
-        ManageRegistration::model()->deleteAll('name="'. $name . '"');
+        $selectSubject = CHtml::listData(ManageRegistration::model()->findAll('name="'. $name . '" AND type='. ManageRegistration::TYPE_SUBJECT_AREA), "depend", "depend");
+        ManageRegistration::model()->deleteAll("name='". $name."' AND type=". ManageRegistration::TYPE_SUBJECT_AREA);
+        ManageRegistration::model()->deleteAll("id IN(". implode(",", $selectSubject) .") AND type=". ManageRegistration::TYPE_TEACHER_OTHER);
         $this->redirect($_SERVER['HTTP_REFERER']);
     }
     
