@@ -53,12 +53,15 @@ class RegistrationController extends Controller
             if($_POST['ManageRegistration']['type'] == ManageRegistration::TYPE_SUBJECT_AREA) {
                 if(!empty($_POST['ManageRegistration']['subjectarea']) && is_array($_POST['ManageRegistration']['subjectarea']) && !empty($_POST['ManageRegistration']['name'])) {
                     foreach ($_POST['ManageRegistration']['subjectarea'] as $select) {
-                        $m_reg = new ManageRegistration;
-                        $m_reg->attributes = $_POST['ManageRegistration'];
-                        $m_reg->depend = $select;
-                        $m_reg->save(false);
+                        $searchTeacherType = ManageRegistration::model()->find('name="' . $select . '" AND type='. ManageRegistration::TYPE_TEACHER_TYPE);
+                        if(empty(ManageRegistration::model()->find('name="' . $_POST['ManageRegistration']['name'] . '" AND type='. ManageRegistration::TYPE_SUBJECT_AREA))) {
+                            $m_reg = new ManageRegistration;
+                            $m_reg->attributes = $_POST['ManageRegistration'];
+                            $m_reg->depend = $select;
+                            $m_reg->save(false);
+                        }
                     }
-                    return $this->redirect("registration/index");
+                    return $this->redirect(Yii::app()->createUrl("/registration/registration/index"));
                 } else {
                     if(empty($_POST['ManageRegistration']['name'])) {
                         $model[$_POST['ManageRegistration']['type']]->addError("name", "Enter name");
@@ -70,10 +73,14 @@ class RegistrationController extends Controller
                 }
 
             } else {
-                $model[$_POST['ManageRegistration']['type']]->attributes = $_POST['ManageRegistration'];
-                $model[$_POST['ManageRegistration']['type']]->save();
-                if(!$model[$_POST['ManageRegistration']['type']]->hasErrors()) {
-                    return $this->redirect("registration/index");
+                if(strtolower($_POST['ManageRegistration']['name']) != "other") {
+                    $model[$_POST['ManageRegistration']['type']]->attributes = $_POST['ManageRegistration'];
+                    $model[$_POST['ManageRegistration']['type']]->save();
+                    if (!$model[$_POST['ManageRegistration']['type']]->hasErrors()) {
+                        return $this->redirect(Yii::app()->createUrl("/registration/registration/index"));
+                    }
+                } else {
+                    $model[$_POST['ManageRegistration']['type']]->addError("name", "Not valid data");
                 }
             }
 

@@ -74,11 +74,11 @@
             	</div>
             </div>
 
-            <div class='row'>
-                <div class="col-xs-12">
-                    <?php $this->renderPartial("_teacherOther", ['model' => $model, 'others' => $others, 'setting' => $setting]) ?>
-                </div>
-            </div>
+<!--            <div class='row'>-->
+<!--                <div class="col-xs-12">-->
+<!--                    --><?php //$this->renderPartial("_teacherOther", ['model' => $model, 'others' => $others, 'setting' => $setting]) ?>
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </div>        
