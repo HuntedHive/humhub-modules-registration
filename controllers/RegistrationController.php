@@ -132,6 +132,17 @@ class RegistrationController extends Controller
             echo "Erorr of data editing";
         }
     }
+
+    public function actionEditSubject()
+    {
+        if (isset($_POST['value'])) {
+            $value = $_POST['value'];
+            $lastValue = $_POST['name'];
+            ManageRegistration::model()->updateAll(['name' => $value], ' type='. ManageRegistration::TYPE_SUBJECT_AREA. ' AND name="' .$lastValue. '"');
+        } else {
+            echo "Erorr of data editing";
+        }
+    }
     
     public function actionDelete($id)
     {
