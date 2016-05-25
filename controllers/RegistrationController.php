@@ -54,10 +54,10 @@ class RegistrationController extends Controller
                 if(!empty($_POST['ManageRegistration']['subjectarea']) && is_array($_POST['ManageRegistration']['subjectarea']) && !empty($_POST['ManageRegistration']['name'])) {
                     foreach ($_POST['ManageRegistration']['subjectarea'] as $select) {
                         $searchTeacherType = ManageRegistration::model()->find('name="' . $select . '" AND type='. ManageRegistration::TYPE_TEACHER_TYPE);
-                        if(empty(ManageRegistration::model()->find('name="' . $_POST['ManageRegistration']['name'] . '" AND type='. ManageRegistration::TYPE_SUBJECT_AREA))) {
+                        if(!empty($searchTeacherType) && empty(ManageRegistration::model()->find('name="' . $_POST['ManageRegistration']['name'] . '"AND depend='.$searchTeacherType->id.' AND type='. ManageRegistration::TYPE_SUBJECT_AREA))) {
                             $m_reg = new ManageRegistration;
                             $m_reg->attributes = $_POST['ManageRegistration'];
-                            $m_reg->depend = $select;
+                            $m_reg->depend = $searchTeacherType->id;
                             $m_reg->save(false);
                         }
                     }
