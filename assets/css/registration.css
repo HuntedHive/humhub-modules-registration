@@ -129,11 +129,12 @@ HumHub Registration Module Style CSS
 	}
 
     @media (max-width: 767px) {
-            .form-registration-items .checkbox.pull-right{
-                    float:left !important;
-                    margin-top:10px !important;
-                    margin-bottom:10px;
-            }
+        .form-registration-items .checkbox.pull-right{
+                float:left !important;
+                margin-top:10px !important;
+                margin-bottom:10px;
+                width:100%;
+        }
 
     }
 

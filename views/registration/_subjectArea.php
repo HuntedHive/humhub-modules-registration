@@ -34,7 +34,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                 } else {
                     foreach ($subjects as $subject) {
                         echo '<tr class="ui-sortable" data-item="item_'.$subject->id.'">
-                                <td class="col-sm-4" style="z-index:99999;">
+                                <td class="col-sm-4" style="z-index:1000;">
                                     <i class="fa fa-bars dragdrop"></i>
                                     <span class="m_item" data-pk="' . $subject->id . '" data-url="' . $this->createUrl('editSubject') . '" data-name="' . $subject->name . '">
                                         '.$subject->name.'
