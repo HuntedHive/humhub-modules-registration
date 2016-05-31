@@ -57,6 +57,7 @@ class RegistrationController extends Controller
                         if(!empty($searchTeacherType) && empty(ManageRegistration::model()->find('name="' . $_POST['ManageRegistration']['name'] . '"AND depend='.$searchTeacherType->id.' AND type='. ManageRegistration::TYPE_SUBJECT_AREA))) {
                             $m_reg = new ManageRegistration;
                             $m_reg->attributes = $_POST['ManageRegistration'];
+                            $m_reg->teacher_type= ManageRegistration::DEFAULT_DEFAULT;
                             $m_reg->depend = $searchTeacherType->id;
                             $m_reg->save(false);
                         }
