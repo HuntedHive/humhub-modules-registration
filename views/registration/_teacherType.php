@@ -29,7 +29,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                     echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
                 } else {
                     foreach ($types as $type) {
-                        echo '<tr class="ui-sortable" data-item="item_'.$type->id.'"><td style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $type->id . '" data-url="' . $this->createUrl('edit') . '">'.$type->name.'</span></td><td><a class="btn btn-danger btn-xs tt close" href="' . $this->createUrl('delete', ['id' => $type->id]) . '"><i class="fa fa-times"></i></a></td></tr>';
+                        echo '<tr class="ui-sortable" data-item="item_'.$type->id.'"><td style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $type->id . '" data-url="' . $this->createUrl('edit') . '">'.$type->name.'</span></td><td><a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('delete', ['id' => $type->id]) . '"><i class="fa fa-times"></i></a></td></tr>';
                     }
                 }
                 ?>
