@@ -24,15 +24,32 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
     <div class="table-scrollable">
         <table class="table table-hover">    
             <tbody class='c_items' data-type="<?= ManageRegistration::TYPE_TEACHER_TYPE ?>">
-				<?php
-                if (empty($types)) {
-                    echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
-                } else {
-                    foreach ($types as $type) {
-                        echo '<tr class="ui-sortable" data-item="item_'.$type->id.'"><td style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $type->id . '" data-url="' . $this->createUrl('edit') . '">'.$type->name.'</span></td><td><a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('delete', ['id' => $type->id]) . '"><i class="fa fa-times"></i></a></td></tr>';
+            <?php
+            $other = false;
+            if (empty($objects)) {
+                echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
+            } else {
+                foreach ($objects as $object) {
+                    if(!(bool)$object->default) {
+                        echo '<tr class="ui-sortable" data-item="item_'.$object->id.'"><td  style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $object->id . '" data-url="' . $this->createUrl('edit') . '">'.$object->name.'</span></td><td><a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('delete', ['id' => $object->id]) . '"><i class="fa fa-times"></i></a></td></tr>';
+                    } else {
+                        $other = true;
                     }
                 }
-                ?>
+            }
+
+            if($other) {
+                echo '<tr class="ui-sortable">
+                                <td class="col-sm-4" style="z-index:1000;">
+                                    <i class="fa fa-bars dragdrop"></i>
+                                    <span class="m_item">
+                                          other
+                                    </span>
+                                </td>
+                                <td class="col-sm-6">
+                            </td>';
+            }
+            ?>
             </tbody>
         </table>
     </div>

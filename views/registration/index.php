@@ -52,25 +52,25 @@
             
             <div class='row'>
             	<div class="col-xs-12">
-                	<?php $this->renderPartial("_teacherLevel", ['model' => $model, 'levels' => $levels, 'setting' => $setting]) ?>
+                	<?php $this->renderPartial("_teacherLevel", ['model' => $model, 'objects' => $levels, 'setting' => $setting]) ?>
             	</div>
             </div>
             
             <div class='row'>
             	<div class="col-xs-12">
-                	<?php $this->renderPartial("_teacherType", ['model' => $model, 'types' => $types, 'setting' => $setting]) ?>
+                	<?php $this->renderPartial("_teacherType", ['model' => $model, 'objects' => $types, 'setting' => $setting]) ?>
             	</div>
             </div>
             
             <div class='row'>
                 <div class="col-xs-12">
-					<?php $this->renderPartial("_subjectArea", ['model' => $model, 'subjects' => $subjects, 'setting' => $setting]) ?>
+					<?php $this->renderPartial("_subjectArea", ['model' => $model, 'objects' => $subjects, 'setting' => $setting]) ?>
             	</div>
             </div>
             
             <div class='row'>
             	<div class="col-xs-12">
-                	<?php $this->renderPartial("_teacherInterests", ['model' => $model, 'interests' => $interests, 'setting' => $setting]) ?>
+                	<?php $this->renderPartial("_teacherInterests", ['model' => $model, 'objects' => $interests, 'setting' => $setting]) ?>
             	</div>
             </div>
 

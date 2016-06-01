@@ -29,19 +29,21 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
         <table class="table table-hover">    
             <tbody class="c_items" data-type="<?= ManageRegistration::TYPE_SUBJECT_AREA ?>">
 				<?php
-                if (empty($subjects)) {
+                $other = false;
+                if (empty($objects)) {
                     echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
                 } else {
-                    foreach ($subjects as $subject) {
-                        echo '<tr class="ui-sortable" data-item="item_'.$subject->id.'">
+                    foreach ($objects as $subject) {
+                        if(!(bool)$subject->default) {
+                            echo '<tr class="ui-sortable" data-item="item_' . $subject->id . '">
                                 <td class="col-sm-4" style="z-index:1000;">
                                     <i class="fa fa-bars dragdrop"></i>
                                     <span class="m_item" data-pk="' . $subject->id . '" data-url="' . $this->createUrl('editSubject') . '" data-name="' . $subject->name . '">
-                                        '.$subject->name.'
+                                        ' . $subject->name . '
                                     </span>
                                 </td>
                                 <td class="col-sm-6">'
-                                        . ManageRegistration::getDependNames($subject->name) .
+                                . ManageRegistration::getDependNames($subject->name) .
                                 '</td>
                                 <td class="col-sm-2">
                                     <a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('deleteSubject', ['name' => $subject->name]) . '">
@@ -49,6 +51,21 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                                     </a>
                                 </td>
                               </tr>';
+                        } else {
+                            $other = true;
+                        }
+                    }
+
+                    if($other) {
+                        echo '<tr class="ui-sortable">
+                                <td class="col-sm-4" style="z-index:1000;">
+                                    <i class="fa fa-bars"></i>
+                                    <span class="m_item">
+                                        other
+                                    </span>
+                                </td>
+                                <td class="col-sm-6">
+                            </td>';
                     }
                 }
                 ?>
