@@ -7,6 +7,7 @@ class ManageRegistration extends HActiveRecord
     const TYPE_SUBJECT_AREA = 2;
     const TYPE_TEACHER_INTEREST = 3;
     const TYPE_TEACHER_OTHER = 4;
+    const TYPE_SUBJECT_AREA_OTHER = 5;
     
     const DEFAULT_DEFAULT = 0;
     const DEFAULT_ADDED = 1;
@@ -24,6 +25,7 @@ class ManageRegistration extends HActiveRecord
         self::TYPE_SUBJECT_AREA => 'subject_area',
         self::TYPE_TEACHER_INTEREST => 'teacher_interest',
         self::TYPE_TEACHER_OTHER => 'teacher_other',
+        self::TYPE_SUBJECT_AREA_OTHER => 'subject_area_other',
     ];
     
     public $teacher_level;
@@ -103,16 +105,17 @@ class ManageRegistration extends HActiveRecord
         return CHtml::listData(self::model()->findAll('type=' .self::TYPE_TEACHER_TYPE), 'id', 'name');
     }
 
-    public static function getDependNames($name) {
+    public static function getDependNames($name, $type) {
         if(empty($name)) {
             return "None";
         }
         
-        $otherOption = (!HSetting::model()->find("value='" . ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA] . "' AND name='type_manage'")->value_text)?' AND t.default='.ManageRegistration::DEFAULT_ADDED:"";
-        return self::toDependNames(self::model()->findAll('name="'. $name . '"' . $otherOption));
+        $otherOption = (!HSetting::model()->find("value='" . ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA] . "' AND name='type_manage'")->value_text) ? ' AND t.default=' . ManageRegistration::DEFAULT_ADDED : "";
+        return self::toDependNames(self::model()->findAll('name="' . $name . '"' . $otherOption), $type);
     }
 
-    protected static function toDependNames($dependArray)
+
+    protected static function toDependNames($dependArray, $type)
     {
         $html = '';
         foreach ($dependArray as $item) {

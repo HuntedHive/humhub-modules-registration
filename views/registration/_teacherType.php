@@ -38,7 +38,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                 }
             }
 
-            if($other) {
+            if(($setting[ManageRegistration::TYPE_TEACHER_TYPE]->value_text)) {
                 echo '<tr class="ui-sortable">
                                 <td class="col-sm-4" style="z-index:1000;">
                                     <i class="fa fa-bars dragdrop"></i>

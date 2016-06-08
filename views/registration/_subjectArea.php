@@ -29,10 +29,12 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
         <table class="table table-hover">    
             <tbody class="c_items" data-type="<?= ManageRegistration::TYPE_SUBJECT_AREA ?>">
 				<?php
+                $other = false;
                 if (empty($objects)) {
                     echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
                 } else {
                     foreach ($objects as $subject) {
+                        if($subject->default && strtolower($subject->name) != "other") {
                         echo '<tr class="ui-sortable" data-item="item_' . $subject->id . '">
                                 <td class="col-sm-4" style="z-index:1000;">
                                     <i class="fa fa-bars dragdrop"></i>
@@ -41,7 +43,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                                     </span>
                                 </td>
                                 <td class="col-sm-6">'
-                            . ManageRegistration::getDependNames($subject->name) .
+                            . ManageRegistration::getDependNames($subject->name, $subject->type) .
                             '</td>
                                 <td class="col-sm-2">
                                     <a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('deleteSubject', ['name' => $subject->name]) . '">
@@ -49,6 +51,21 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                                     </a>
                                 </td>
                               </tr>';
+                        } else {
+                            $other = true;
+                        }
+                    }
+
+                    if(($setting[ManageRegistration::TYPE_SUBJECT_AREA]->value_text)) {
+                        echo '<tr class="ui-sortable">
+                                <td class="col-sm-4" style="z-index:1000;">
+                                    <i class="fa fa-bars dragdrop"></i>
+                                    <span class="m_item">
+                                          other
+                                    </span>
+                                </td>
+                                <td class="col-sm-6">
+                            </td>';
                     }
                 }
                 ?>
@@ -67,12 +84,16 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
             <!-- Existing Selectbox <?php echo CHtml::activeDropDownList($model[ManageRegistration::TYPE_SUBJECT_AREA], 'depend', ManageRegistration::getTeachetTypeDropDownList() , array('class' => 'form-control input-sm selectpicker show-tick pull-left')); ?> -->
             <select name="ManageRegistration[subjectarea][]" class="selectpicker form-control show-tick input-sm pull-left" multiple title="Select related teacher type(s)...">
                 <optgroup label="Select related teacher type(s)">
-<!--                  <option  data-content="<span class='label label-success'>primary school</span>">primary school</option>-->
-<!--                  <option  data-content="<span class='label label-success'>high school</span>">high school</option>-->
-<!--                  <option  data-content="<span class='label label-success'>other</span>">other</option>-->
-                    <?php foreach (ManageRegistration::model()->findAll((!($setting[ManageRegistration::TYPE_TEACHER_TYPE]->value_text)?" t.default=". ManageRegistration::DEFAULT_ADDED . " AND ":"") . "type=" . ManageRegistration::TYPE_TEACHER_TYPE ) as $item) {
-                        echo "<option  data-content='".$item->name."'>$item->name</option>";
-                    }
+                    <?php
+                        $other = false;
+                        foreach (ManageRegistration::model()->findAll((!($setting[ManageRegistration::TYPE_TEACHER_TYPE]->value_text)?" t.default=". ManageRegistration::DEFAULT_ADDED . " AND ":"") . "type=" . ManageRegistration::TYPE_TEACHER_TYPE ) as $item) {
+                                echo "<option  data-content='" . $item->name . "'>$item->name</option>";
+                        }
+                    ?>
+                    <?php
+                        if(($setting[ManageRegistration::TYPE_TEACHER_TYPE]->value_text)) {
+                            echo "<option  data-content='other'>other</option>";
+                        }
                     ?>
                 </optgroup>
             </select>

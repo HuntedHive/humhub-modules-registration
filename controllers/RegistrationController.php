@@ -53,13 +53,27 @@ class RegistrationController extends Controller
             if($_POST['ManageRegistration']['type'] == ManageRegistration::TYPE_SUBJECT_AREA) {
                 if(!empty($_POST['ManageRegistration']['subjectarea']) && is_array($_POST['ManageRegistration']['subjectarea']) && !empty($_POST['ManageRegistration']['name'])) {
                     foreach ($_POST['ManageRegistration']['subjectarea'] as $select) {
-                        $searchTeacherType = ManageRegistration::model()->find('name="' . $select . '" AND type='. ManageRegistration::TYPE_TEACHER_TYPE);
-                        if(!empty($searchTeacherType) && empty(ManageRegistration::model()->find('name="' . $_POST['ManageRegistration']['name'] . '"AND depend='.$searchTeacherType->id.' AND type='. ManageRegistration::TYPE_SUBJECT_AREA))) {
+                        if($select == "other") {
+                            $m_reg1 = new ManageRegistration;
+                            $m_reg1->name = $select;
+                            $m_reg1->teacher_type = ManageRegistration::DEFAULT_ADDED;
+                            $m_reg1->depend = 0;
+                            $m_reg1->save(false);
+
                             $m_reg = new ManageRegistration;
                             $m_reg->attributes = $_POST['ManageRegistration'];
-                            $m_reg->teacher_type= ManageRegistration::DEFAULT_DEFAULT;
-                            $m_reg->depend = $searchTeacherType->id;
+                            $m_reg->teacher_type = ManageRegistration::DEFAULT_ADDED;
+                            $m_reg->depend = $m_reg1->getPrimaryKey();
                             $m_reg->save(false);
+                        } else {
+                            $searchTeacherType = ManageRegistration::model()->find('name="' . $select . '" AND type=' . ManageRegistration::TYPE_TEACHER_TYPE);
+                            if (!empty($searchTeacherType) && empty(ManageRegistration::model()->find('name="' . $_POST['ManageRegistration']['name'] . '"AND depend=' . $searchTeacherType->id . ' AND type=' . ManageRegistration::TYPE_SUBJECT_AREA))) {
+                                $m_reg = new ManageRegistration;
+                                $m_reg->attributes = $_POST['ManageRegistration'];
+                                $m_reg->teacher_type = ManageRegistration::DEFAULT_DEFAULT;
+                                $m_reg->depend = $searchTeacherType->id;
+                                $m_reg->save(false);
+                            }
                         }
                     }
                     return $this->redirect(Yii::app()->createUrl("/registration/registration/index"));
