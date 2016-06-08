@@ -86,7 +86,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                 <optgroup label="Select related teacher type(s)">
                     <?php
                         $other = false;
-                        foreach (ManageRegistration::model()->findAll((!($setting[ManageRegistration::TYPE_TEACHER_TYPE]->value_text)?" t.default=". ManageRegistration::DEFAULT_ADDED . " AND ":"") . "type=" . ManageRegistration::TYPE_TEACHER_TYPE ) as $item) {
+                        foreach (ManageRegistration::model()->findAll(" t.default=". ManageRegistration::DEFAULT_ADDED .  " AND type=" . ManageRegistration::TYPE_TEACHER_TYPE ) as $item) {
                                 echo "<option  data-content='" . $item->name . "'>$item->name</option>";
                         }
                     ?>
