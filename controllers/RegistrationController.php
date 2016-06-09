@@ -165,6 +165,7 @@ class RegistrationController extends Controller
     public function actionDelete($id)
     {
         ManageRegistration::model()->deleteByPk($id);
+        ManageRegistration::model()->deleteAll('depend='. $id);
         $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
@@ -190,5 +191,17 @@ class RegistrationController extends Controller
         } else {
             echo "Erorr of data sorting";
         }
+    }
+    
+    public function actionDeleteSubjectItem()
+    {
+        if(isset($_POST['dataId']) && isset($_POST['dataDepend'])) {
+            ManageRegistration::model()->deleteByPk([
+                'id' => $_POST['dataId'],
+            ]);
+            echo true;
+        }
+
+        echo false;
     }
 }

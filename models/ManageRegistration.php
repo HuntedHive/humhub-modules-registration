@@ -119,13 +119,16 @@ class ManageRegistration extends HActiveRecord
     {
         $html = '';
         foreach ($dependArray as $item) {
-            $html.= '<span class="label label-success">';
+
             if(!empty($item->depend)) {
-                $html .= self::model()->find("id=" . $item->depend)->name;
-            } else {
-                //$html .= "None";
+                $depend = self::model()->find("id=" . $item->depend);
+                if(!empty($depend)) {
+                    $html.= '<span class="label label-success">';
+                        $html .= $depend->name;
+                        $html .= "<i class='subject_close fa fa-times' data-id='$item->id' data-depend='$item->depend'></i>";
+                    $html.= '</span>';
+                }
             }
-            $html.= '</span>';
         }
 
         if(empty($html)) {

@@ -128,4 +128,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
 </div>
 
 <hr class="hr-spacer">
+<script>
+    var urlDelete = '<?= Yii::app()->createUrl("/registration/registration/deleteSubjectItem"); ?>';
+</script>
 

@@ -1,6 +1,7 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script src="<?php echo $this->module->assetsUrl; ?>/js/jquery-ui.min.js"></script>
+<script src="<?php echo $this->module->assetsUrl; ?>/js/registration.js"></script>
 
 
 <link rel="stylesheet" type="text/css"

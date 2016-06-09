@@ -187,3 +187,8 @@ HumHub Registration Module Style CSS
 
     }
 
+    .subject_close {
+        color: red;
+        margin-left: 5px;
+        font-size: 12px;
+    }
