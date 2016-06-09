@@ -7,7 +7,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
 <div class="table-responsive">
 	<div class="row no-margin">
 	    <div class="col-xs-4 no-padding">
-			<h5><strong><a href="#"data-toggle="modal" data-target="#editAPST">Item Name</a></strong></h5>
+			<h5><strong>Item Name</strong></h5>
     	</div>
     	<div class="col-xs-4 no-padding">
 			<h5><strong>APSTs</strong></h5>
