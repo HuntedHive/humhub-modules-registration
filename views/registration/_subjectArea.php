@@ -65,6 +65,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                                     </span>
                                 </td>
                                 <td class="col-sm-6">
+                                <td class="col-sm-2">
                             </td>';
                     }
                 }
