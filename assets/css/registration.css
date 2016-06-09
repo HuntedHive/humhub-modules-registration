@@ -123,10 +123,59 @@ HumHub Registration Module Style CSS
 	.selectpicker-tags .bootstrap-select.btn-group .dropdown-toggle .filter-option {
 		padding: 4px 0px 7px 0px;
 	}
-	
-	.ui-sortable .label-success{
+
+    .ui-sortable .label-success{
 		margin-right:3px;
 	}
+
+    .apst-field{
+        max-width:250px;
+        margin-right:10px;
+        margin-bottom:5px;
+    }
+
+    .modal .btn-danger{
+        height: 18px !important;
+        padding-top: 2px;
+        opacity:1;
+      }
+	
+	#editAPST .input-group{
+        width:85%;
+        margin-bottom:5px;
+        float:left;
+    }
+
+    #editAPST .input-group input, #editAPST .input-group .btn{
+        height:auto;
+    }
+
+    #editAPST .apst-clear{
+        padding: 10px 20px;
+        color:#22bcb8
+    }
+
+    #editAPST .table-responsive{
+        max-height:300px;
+        overflow-y:auto;
+    }
+
+    #editAPST .modal-footer{
+        padding-bottom:20px;
+    }
+
+    #editAPST .apst-controls .btn{
+        height:auto;
+        width:auto;
+        background-color:#bbb;
+        color:#fff !important;
+    }
+
+    #editAPST .modal-footer .btn{
+        height:auto;
+        width:auto;
+    }
+
 
     @media (max-width: 767px) {
         .form-registration-items .checkbox.pull-right{
