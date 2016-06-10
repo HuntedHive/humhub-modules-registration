@@ -34,7 +34,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
             } else {
                 foreach ($objects as $object) {
                     if((bool)$object->default) {
-                        echo '<tr class="ui-sortable" data-item="item_'.$object->id.'"><td  style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $object->id . '" data-url="' . $this->createUrl('edit') . '">'.$object->name.'</span></td><td><a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('delete', ['id' => $object->id]) . '"><i class="fa fa-times"></i></a></td></tr>';
+                        echo '<tr class="ui-sortable" data-item="item_'.$object->id.'"><td  style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $object->id . '" data-url="' . $this->createUrl('edit') . '">'.$object->name.'</span></td><td class="apsts_file">'.$object->file_name.'</td><td><a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('delete', ['id' => $object->id]) . '"><i class="fa fa-times"></i></a></td></tr>';
                     } else {
                         $other = true;
                     }
@@ -59,7 +59,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
 
 
 <div class="form form-registration-items">
-    <?php echo CHtml::beginForm(['action' => '', 'method' => 'post']); ?>
+    <?php echo CHtml::beginForm('', 'post', array('enctype' => 'multipart/form-data')); ?>
     <?php echo CHtml::activeHiddenField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'type', ['value' => ManageRegistration::TYPE_TEACHER_TYPE]); ?>
     <?php echo CHtml::activeHiddenField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'default', ['value' => ManageRegistration::DEFAULT_ADDED]); ?>
     <div class="row controls">
@@ -69,10 +69,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
         <div class="col-sm-9">
             <?php echo CHtml::activeTextField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'name', array('class' => 'form-control input-sm', 'placeholder' => 'Enter item name',)); ?>
             <div class="input-group pull-left apst-field">
-               <input type="text" class="form-control input-sm" placeholder="Upload APSTs">
-               <span class="input-group-btn">
-                    <button class="btn btn-default btn-sm" type="button">Browse</button>
-               </span>
+                <?php echo CHtml::activeFileField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'file', array('class' => 'form-control input-sm', 'placeholder' => 'Enter item name',)); ?>
             </div>
             <button type="submit" name="btn" class="btn btn-primary btn-sm pull-left">
                 <i class="fa fa-plus"></i> add item

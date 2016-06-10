@@ -33,7 +33,8 @@ class ManageRegistration extends HActiveRecord
     public $subject_area;
     public $teacher_interest;
     public $teacher_other;
-    
+
+    public $file;
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -61,11 +62,14 @@ class ManageRegistration extends HActiveRecord
         // will receive user inputs.
         return array(
             array(['name', 'type', 'default'], 'required'),
-            array('name', 'length', 'max' => 100),
+            array(['name'], 'length', 'max' => 100),
+            array('file_name', 'length', 'max' => 255),
+            array(['file_path'], 'length', 'max' => 255),
+            array('file', 'file', 'types'=>'xlsx, ods'),
             ['name','uniqueMethod'],
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array(array('module_id','sort_at','depend'), 'safe'),
+            array(array('module_id','sort_at','depend', 'file_name', 'file_path'), 'safe'),
         );
     }
 

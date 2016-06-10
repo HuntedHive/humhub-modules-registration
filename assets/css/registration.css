@@ -192,3 +192,10 @@ HumHub Registration Module Style CSS
         margin-left: 5px;
         font-size: 12px;
     }
+
+
+    .apsts_file{
+        text-decoration: underline;
+        color:blue;
+        cursor: pointer;
+    }

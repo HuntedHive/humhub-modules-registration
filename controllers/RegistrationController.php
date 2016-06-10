@@ -92,6 +92,13 @@ class RegistrationController extends Controller
 
             } else {
                 if(strtolower($_POST['ManageRegistration']['name']) != "other") {
+                    $path = Yii::getPathOfAlias("webroot") . "/uploads/file/";
+
+                    $model[$_POST['ManageRegistration']['type']]->file = CUploadedFile::getInstance($model[$_POST['ManageRegistration']['type']],'file');
+                    $_POST['ManageRegistration']["file_name"] = $model[$_POST['ManageRegistration']['type']]->file->name;
+                    $model[$_POST['ManageRegistration']['type']]->file->saveAs($path.$model[$_POST['ManageRegistration']['type']]->file->name);
+                    $_POST['ManageRegistration']["file_path"] = $path;
+
                     $model[$_POST['ManageRegistration']['type']]->attributes = $_POST['ManageRegistration'];
                     $model[$_POST['ManageRegistration']['type']]->save();
                     if (!$model[$_POST['ManageRegistration']['type']]->hasErrors()) {
