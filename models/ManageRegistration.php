@@ -35,6 +35,7 @@ class ManageRegistration extends HActiveRecord
     public $teacher_other;
 
     public $file;
+    public $apstsfile;
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -67,6 +68,7 @@ class ManageRegistration extends HActiveRecord
             array('file_name', 'length', 'max' => 255),
             array(['file_path'], 'length', 'max' => 255),
             array('file', 'file', 'types'=>'xlsx, ods'),
+            array('apstsfile', 'file', 'types'=>'xlsx, ods'),
             ['name','uniqueMethod'],
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.

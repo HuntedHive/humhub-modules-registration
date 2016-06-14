@@ -128,7 +128,7 @@ HumHub Registration Module Style CSS
 		margin-right:3px;
 	}
 
-    .apst-field{
+    .form-registration-items .apst-field{
         max-width:250px;
         margin-right:10px;
         margin-bottom:5px;
@@ -139,8 +139,8 @@ HumHub Registration Module Style CSS
         padding-top: 2px;
         opacity:1;
       }
-	
-	#editAPST .input-group{
+
+	.form-registration-items #editAPST .input-group{
         width:85%;
         margin-bottom:5px;
         float:left;
@@ -176,6 +176,9 @@ HumHub Registration Module Style CSS
         width:auto;
     }
 
+    #editAPST .apst-field {
+        width: 100%;
+    }
 
     @media (max-width: 767px) {
         .form-registration-items .checkbox.pull-right{
@@ -199,3 +202,24 @@ HumHub Registration Module Style CSS
         color:blue;
         cursor: pointer;
     }
+
+    .apst-field input[type=text] {
+        background-color:#fff !important;
+    }
+
+    .file_edit {
+        margin-left: 15px;
+        float : left;
+        color : #22bcb8;
+        display:none;
+    }
+
+    .apsts_file:hover .file_edit {
+        display: block;
+    }
+
+    .errorBlock {
+        margin: -10px 0px 15px 0px;
+        text-align: center;
+    }
+

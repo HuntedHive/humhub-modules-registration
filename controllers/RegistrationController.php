@@ -17,8 +17,7 @@ class RegistrationController extends Controller
             'accessControl', // perform access control for CRUD operations
         );
     }
-    
-    
+
     /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
@@ -210,5 +209,25 @@ class RegistrationController extends Controller
         }
 
         echo false;
+    }
+
+    public function actionUpdateAPSTS()
+    {
+        if(!empty($_POST) && !empty($_FILES['ManageRegistration']['size']['apstsfile'])) {
+            $idType = $_POST['apsts_id'];
+            $path = Yii::getPathOfAlias("webroot") . "/uploads/file/";
+            $model = ManageRegistration::model()->findByPk($idType);
+            $model->file = CUploadedFile::getInstance($model, 'apstsfile');
+            $model->file_name = $model->file->name;
+            $model->file_path = $path;
+
+            $model->save(false);
+            if (!$model->hasErrors()) {
+                echo 1;
+            }
+            $model->file->saveAs($path . $model->file->name);
+        } else {
+            echo 0;
+        }
     }
 }
