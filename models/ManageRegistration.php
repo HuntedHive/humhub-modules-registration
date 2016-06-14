@@ -62,6 +62,7 @@ class ManageRegistration extends HActiveRecord
         // will receive user inputs.
         return array(
             array(['name', 'type', 'default'], 'required'),
+            ['file_path', 'unique', 'message' => 'File name has already been taken'],
             array(['name'], 'length', 'max' => 100),
             array('file_name', 'length', 'max' => 255),
             array(['file_path'], 'length', 'max' => 255),
@@ -75,7 +76,7 @@ class ManageRegistration extends HActiveRecord
 
     public function uniqueMethod()
     {
-        $data = $this->model()->findAll('type='.$this->type . ' AND name="'.$this->name .'"');
+        $data = $this->model()->findAll('type='.$this->type . ' AND name="'.trim($this->name) .'"');
         if (!empty($data)) {
             $this->addError("name", "Item name must be unique");
         }
