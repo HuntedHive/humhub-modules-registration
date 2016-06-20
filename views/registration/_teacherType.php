@@ -47,10 +47,17 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                 $obj =  ManageRegistration::model()->find('type=1 AND `default`=0 AND file_name is not NULL');
                 if(empty($obj)) {
                     $obj = ManageRegistration::model()->find('type=1 AND `default`=0');
+                    if(empty($obj)) {
+                        $obj = new ManageRegistration();
+                        $obj->name = 'others';
+                        $obj->type = ManageRegistration::TYPE_TEACHER_TYPE;
+                        $obj->default = ManageRegistration::DEFAULT_DEFAULT;
+                        $obj->save(false);
+                    }
                 }
-                
+
                 if(!empty($obj)) {
-                    $tdEdit = '<td class="apsts_file"><div class="pull-left">'.$obj->file_name.'</div><div class="file_edit" data-id="'.$obj->id.'" data-name="'.$obj->file_name.'" data-type="'.trim($obj->name).'"><i class="fa fa-pencil"></i>'.(empty($obj->file_name)?"Add APSTs":"edit").'</div></td>';
+                    $tdEdit = '<td class="apsts_file"><div class="pull-left">'.$obj->file_name.'</div><div class="file_edit" data-id="'.$obj->getPrimaryKey() .'" data-name="'.$obj->file_name.'" data-type="'.trim($obj->name).'"><i class="fa fa-pencil"></i>'.(empty($obj->file_name)?"Add APSTs":"edit").'</div></td>';
                 } else {
 //                    $tdEdit = '<td class="apsts_file" data-name="other"><div class="file_edit"><i class="fa fa-pencil"></i>add apsts</div></td>';
                 }
