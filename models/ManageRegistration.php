@@ -68,7 +68,7 @@ class ManageRegistration extends HActiveRecord
             array('file_name', 'length', 'max' => 255),
             array(['file_path'], 'length', 'max' => 255),
             array('file', 'file', 'types'=>'xlsx, ods'),
-            array('apstsfile', 'file', 'types'=>'xlsx, ods'),
+            array('apstsfile', 'file', 'types'=> 'xlsx, ods', 'allowEmpty'=>true),
             ['name','uniqueMethod'],
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
