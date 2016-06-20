@@ -42,6 +42,19 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                 }
             }
             if(($setting[ManageRegistration::TYPE_TEACHER_TYPE]->value_text)) {
+
+                $tdEdit = '';
+                $obj =  ManageRegistration::model()->find('type=1 AND `default`=0 AND file_name is not NULL');
+                if(empty($obj)) {
+                    $obj = ManageRegistration::model()->find('type=1 AND `default`=0');
+                }
+                
+                if(!empty($obj)) {
+                    $tdEdit = '<td class="apsts_file"><div class="pull-left">'.$obj->file_name.'</div><div class="file_edit" data-id="'.$obj->id.'" data-name="'.$obj->file_name.'" data-type="'.trim($obj->name).'"><i class="fa fa-pencil"></i>'.(empty($obj->file_name)?"Add APSTs":"edit").'</div></td>';
+                } else {
+//                    $tdEdit = '<td class="apsts_file" data-name="other"><div class="file_edit"><i class="fa fa-pencil"></i>add apsts</div></td>';
+                }
+
                 echo '<tr class="ui-sortable">
                                 <td class="col-sm-4" style="z-index:1000;">
                                     <i class="fa fa-bars dragdrop"></i>
@@ -49,6 +62,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                                           other
                                     </span>
                                 </td>
+                                ' . $tdEdit . '
                                 <td class="col-sm-6">
                             </td>';
             }

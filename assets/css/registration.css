@@ -214,7 +214,7 @@ HumHub Registration Module Style CSS
         display:none;
     }
 
-    .apsts_file:hover .file_edit {
+    tr.ui-sortable:hover .file_edit {
         display: block;
     }
 

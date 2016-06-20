@@ -244,6 +244,15 @@ class RegistrationController extends Controller
                 $profile->teacher_type = $type;
                 $profile->save();
             }
+
+            $registration = ManageRegistration::model()->find('name="'.$type . '" AND `default`=0'  );
+            if(empty($registration)) {
+                $reg = new ManageRegistration();
+                $reg->name = $type;
+                $reg->type = ManageRegistration::TYPE_TEACHER_TYPE;
+                $reg->default = ManageRegistration::DEFAULT_DEFAULT;
+                $reg->save(false);
+            }
             return true;
         }
 
