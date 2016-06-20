@@ -230,4 +230,17 @@ class RegistrationController extends Controller
             echo 0;
         }
     }
+
+    public function actionUpdateUserTeacherType()
+    {
+        if(isset($_POST['teachertype']) && isset($_POST['teacherTypeOther'])) {
+            $type = ($_POST['teacherTypeOther'])?:$_POST['teachertype'];
+            $profile = Profile::model()->find('user_id='.Yii::app()->user->id);
+            $profile->teacher_type = $type;
+            $profile->save();
+            return true;
+        }
+
+        return false;
+    }
 }
