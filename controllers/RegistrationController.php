@@ -29,6 +29,10 @@ class RegistrationController extends Controller
             array('allow',
                 'expression' => 'Yii::app()->user->isAdmin()'
             ),
+            array('allow',
+                'users' => array('@'),
+                'actions'=>array('updateUserTeacherType'),
+            ),
             array('deny', // deny all users
                 'users' => array('*'),
             ),
@@ -234,10 +238,12 @@ class RegistrationController extends Controller
     public function actionUpdateUserTeacherType()
     {
         if(isset($_POST['teachertype']) && isset($_POST['teacherTypeOther'])) {
-            $type = ($_POST['teacherTypeOther'])?:$_POST['teachertype'];
+            $type = !empty($_POST['teacherTypeOther'])?$_POST['teacherTypeOther']:$_POST['teachertype'];
             $profile = Profile::model()->find('user_id='.Yii::app()->user->id);
-            $profile->teacher_type = $type;
-            $profile->save();
+            if(!empty($profile)) {
+                $profile->teacher_type = $type;
+                $profile->save();
+            }
             return true;
         }
 
