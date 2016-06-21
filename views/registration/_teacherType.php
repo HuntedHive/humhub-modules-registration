@@ -35,7 +35,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
             } else {
                 foreach ($objects as $object) {
                     if((bool)$object->default) {
-                        echo '<tr class="ui-sortable" data-item="item_'.$object->id.'"><td  style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $object->id . '" data-url="' . $this->createUrl('edit') . '">'.$object->name.'</span></td><td class="apsts_file"><div class="pull-left">'.$object->file_name.'</div><div class="file_edit" data-id="'.$object->id.'" data-name="'.$object->file_name.'" data-type="'.trim($object->name).'"><i class="fa fa-pencil"></i>edit</div></td><td><a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('delete', ['id' => $object->id]) . '"><i class="fa fa-times"></i></a></td></tr>';
+                        echo '<tr class="ui-sortable" data-item="item_'.$object->id.'"><td class="col-xs-4" style="z-index:1000;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $object->id . '" data-url="' . $this->createUrl('edit') . '">'.$object->name.'</span></td><td class="col-xs-4 apsts_file"><div class="pull-left">'.$object->file_name.'</div><div class="file_edit" data-id="'.$object->id.'" data-name="'.$object->file_name.'" data-type="'.trim($object->name).'"><i class="fa fa-pencil"></i>edit</div></td><td class="col-xs-4"><a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('delete', ['id' => $object->id]) . '"><i class="fa fa-times"></i></a></td></tr>';
                     } else {
                         $other = true;
                     }
