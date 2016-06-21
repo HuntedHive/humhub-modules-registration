@@ -91,7 +91,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
         <div class="col-sm-9">
             <?php echo CHtml::activeTextField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'name', array('class' => 'form-control input-sm', 'placeholder' => 'Enter item name',)); ?>
             <div class="input-group pull-left apst-field">
-                <?php echo CHtml::activeFileField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'file', array('class' => 'filestyle', 'placeholder' => 'Enter item name',)); ?>
+                <?php echo CHtml::activeFileField($model[ManageRegistration::TYPE_TEACHER_TYPE], 'file', array('class' => 'filestyle', 'placeholder' => 'Select APST file',)); ?>
             </div>
             <button type="submit" name="btn" class="btn btn-primary btn-sm pull-left">
                 <i class="fa fa-plus"></i> add item
@@ -112,6 +112,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
     </div>
 	<?php echo CHtml::endForm(); ?>
 </div>
+<p class="help-text"><small><strong>APST file can be in either *.ods or *.xls format and must contain columns [ID][Short Title][Description].<strong><br> The ID column being a simple integer index for each row in order to make the table searchable by the database.</small></p>
 
 <hr class="hr-spacer">
 
