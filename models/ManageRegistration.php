@@ -1,6 +1,14 @@
 <?php
 
-class ManageRegistration extends HActiveRecord
+namespace humhub\modules\registration\models;
+
+use Yii;
+use humhub\components\ActiveRecord;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use humhub\models\Setting;
+
+class ManageRegistration extends ActiveRecord
 {
     const TYPE_TEACHER_LEVEL = 0;
     const TYPE_TEACHER_TYPE = 1;
@@ -36,20 +44,11 @@ class ManageRegistration extends HActiveRecord
 
     public $file;
     public $apstsfile;
-    /**
-     * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
-     * @return ModuleEnabled the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
-    
+
     /**
      * @return string the associated database table name
      */
-    public function tableName()
+    public static function tableName()
     {
         return 'manage_registration';
     }
@@ -63,22 +62,23 @@ class ManageRegistration extends HActiveRecord
         // will receive user inputs.
         return array(
             array(['name', 'type', 'default'], 'required'),
-            ['file_name', 'unique'],
-            array(['name'], 'length', 'max' => 100),
-            array('file_name', 'length', 'max' => 255),
-            array(['file_path'], 'length', 'max' => 255),
-            array('file', 'file', 'types'=>'xlsx, ods'),
-            array('apstsfile', 'file', 'types'=> 'xlsx, ods', 'allowEmpty'=>true),
+            [['file_name', 'name'], 'unique'],
+            array(['name'], 'string', 'max' => 100),
+            [['file_name', 'file_path'], 'string'],
+            array(['file_name'], 'string', 'max' => 255),
+            array(['file_path'], 'string', 'max' => 255),
+            array('file', 'file', 'extensions'=>'xlsx, ods'),
+            array('apstsfile', 'file', 'extensions'=> 'xlsx, ods', 'skipOnEmpty'=>true),
             ['name','uniqueMethod'],
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array(array('module_id','sort_at','depend', 'file_name', 'file_path'), 'safe'),
+            array(array('depend', 'file_name', 'file_path'), 'safe'),
         );
     }
 
     public function uniqueMethod()
     {
-        $data = $this->model()->findAll('type='.$this->type . ' AND name="'.trim($this->name) .'"');
+        $data = $this->find()->andWhere(['type' => $this->type])->andWhere(["name" => trim($this->name)])->one();
         if (!empty($data)) {
             $this->addError("name", "Item name must be unique");
         }
@@ -109,7 +109,7 @@ class ManageRegistration extends HActiveRecord
 
     public static function getTeachetTypeDropDownList()
     {
-        return CHtml::listData(self::model()->findAll('type=' .self::TYPE_TEACHER_TYPE), 'id', 'name');
+        return ArrayHelper::getColumn(self::find()->andWhere('type=' .self::TYPE_TEACHER_TYPE)->all(), ['id' => 'name']);
     }
 
     public static function getDependNames($name, $type) {
@@ -117,8 +117,8 @@ class ManageRegistration extends HActiveRecord
             return "None";
         }
         
-        $otherOption = (!HSetting::model()->find("value='" . ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA] . "' AND name='type_manage'")->value_text) ? ' AND t.default=' . ManageRegistration::DEFAULT_ADDED : "";
-        return self::toDependNames(self::model()->findAll('name="' . $name . '"' . $otherOption), $type);
+        $otherOption = (!Setting::find()->andWhere("value='" . self::$type[self::TYPE_SUBJECT_AREA] . "' AND name='type_manage'")->one()->value_text) ? ' AND `default`=' . self::DEFAULT_ADDED : "";
+        return self::toDependNames(self::find()->andWhere('name="' . $name . '"' . $otherOption)->all(), $type);
     }
 
 
@@ -128,7 +128,7 @@ class ManageRegistration extends HActiveRecord
         foreach ($dependArray as $item) {
 
             if(!empty($item->depend)) {
-                $depend = self::model()->find("id=" . $item->depend);
+                $depend = self::find()->andWhere("id=" . $item->depend)->one();
                 if(!empty($depend)) {
                     $html.= '<span class="label label-success">';
                         $html .= $depend->name;

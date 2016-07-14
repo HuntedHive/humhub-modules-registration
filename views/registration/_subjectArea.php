@@ -1,6 +1,14 @@
-<?php 
-$flag = HSetting::model()->find('name = "type_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA]. '"')->value_text;
-$required = HSetting::model()->find('name = "required_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA]. '"')->value_text;
+<?php
+
+use humhub\models\Setting;
+use humhub\modules\registration\models\ManageRegistration;
+use yii\helpers\Url;
+use yii\helpers\Html;
+
+?>
+<?php
+$flag = Setting::find()->andWhere('name = "type_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA]. '"')->one()->value_text;
+$required = Setting::find()->andWhere('name = "required_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_SUBJECT_AREA]. '"')->one()->value_text;
 ?>
 
 <h4>Teacher Subject Area</h4>
@@ -16,7 +24,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
         <div class="col-xs-4 no-padding">
             <div class="checkbox regular-checkbox-container pull-right checkbox-required">
                 <label>
-                    <a href='<?= $this->createUrl('required', ['required' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
+                    <a href='<?= Url::toRoute('required', ['required' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
                         <input class="regular-checkbox" type='checkbox' value="checkbox-required-subjectarea" <?= $required?"checked":"" ?>/> required field
                         <div class="regular-checkbox-box"></div>
                     </a>
@@ -38,7 +46,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                         echo '<tr class="ui-sortable" data-item="item_' . $subject->id . '">
                                 <td class="col-sm-4" style="z-index:1000;">
                                     <i class="fa fa-bars dragdrop"></i>
-                                    <span class="m_item" data-pk="' . $subject->id . '" data-url="' . $this->createUrl('editSubject') . '" data-name="' . $subject->name . '">
+                                    <span class="m_item" data-pk="' . $subject->id . '" data-url="' . Url::toRoute('editSubject') . '" data-name="' . $subject->name . '">
                                         ' . $subject->name . '
                                     </span>
                                 </td>
@@ -46,7 +54,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                             . ManageRegistration::getDependNames($subject->name, $subject->type) .
                             '</td>
                                 <td class="col-sm-2">
-                                    <a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('deleteSubject', ['name' => $subject->name]) . '">
+                                    <a class="btn btn-danger btn-xs tt close" title="delete" href="' . Url::toRoute('deleteSubject', ['name' => $subject->name]) . '">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>
@@ -77,17 +85,17 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
 
           
 <div class="form form-registration-items">
-    <?php echo CHtml::beginForm(['action' => '', 'method' => 'post']); ?>
+    <?php echo Html::beginForm('', 'post'); ?>
     <div class="row controls">
 
         <div class="col-md-8 selectpicker-tags">
-            <?php echo CHtml::activeTextField($model[ManageRegistration::TYPE_SUBJECT_AREA], 'name', array('class' => 'form-control input-sm pull-left', 'placeholder' => 'Enter item name',)); ?>
-            <!-- Existing Selectbox <?php echo CHtml::activeDropDownList($model[ManageRegistration::TYPE_SUBJECT_AREA], 'depend', ManageRegistration::getTeachetTypeDropDownList() , array('class' => 'form-control input-sm selectpicker show-tick pull-left')); ?> -->
+            <?php echo Html::activeTextInput($model[ManageRegistration::TYPE_SUBJECT_AREA], 'name', array('class' => 'form-control input-sm pull-left', 'placeholder' => 'Enter item name',)); ?>
+            <!-- Existing Selectbox <?php echo Html::activeDropDownList($model[ManageRegistration::TYPE_SUBJECT_AREA], 'depend', ManageRegistration::getTeachetTypeDropDownList() , array('class' => 'form-control input-sm selectpicker show-tick pull-left')); ?> -->
             <select name="ManageRegistration[subjectarea][]" class="selectpicker form-control show-tick input-sm pull-left" multiple title="Select related teacher type(s)...">
                 <optgroup label="Select related teacher type(s)">
                     <?php
                         $other = false;
-                        foreach (ManageRegistration::model()->findAll(" t.default=". ManageRegistration::DEFAULT_ADDED .  " AND type=" . ManageRegistration::TYPE_TEACHER_TYPE ) as $item) {
+                        foreach (ManageRegistration::find()->andWhere("`default`=". ManageRegistration::DEFAULT_ADDED .  " AND type=" . ManageRegistration::TYPE_TEACHER_TYPE )->all() as $item) {
                                 echo "<option  data-content='" . $item->name . "'>$item->name</option>";
                         }
                     ?>
@@ -108,7 +116,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
         <div class="col-md-4">
         	<div class="checkbox regular-checkbox-container pull-right">
                 <label>
-                    <a href='<?= $this->createUrl('type', ['type' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
+                    <a href='<?= Url::toRoute('type', ['type' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
                         <input class="regular-checkbox" type='checkbox' <?= $flag?"checked":"" ?>/> add 'other' option to list
                         <div class="regular-checkbox-box"></div>
                     </a>
@@ -119,16 +127,16 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
     </div>
     <div class="row">
         <div class="col-sm-12">
-             <?php echo CHtml::errorSummary($model[ManageRegistration::TYPE_SUBJECT_AREA], '', ''); ?>
-             <?php echo CHtml::activeHiddenField($model[ManageRegistration::TYPE_SUBJECT_AREA], 'type', ['value' => ManageRegistration::TYPE_SUBJECT_AREA]); ?>
-             <?php echo CHtml::activeHiddenField($model[ManageRegistration::TYPE_SUBJECT_AREA], 'default', ['value' => ManageRegistration::DEFAULT_ADDED]); ?>
+             <?php echo Html::errorSummary($model[ManageRegistration::TYPE_SUBJECT_AREA], ['header' => '', 'style' => 'color:red']); ?>
+             <?php echo Html::activeHiddenInput($model[ManageRegistration::TYPE_SUBJECT_AREA], 'type', ['value' => ManageRegistration::TYPE_SUBJECT_AREA]); ?>
+             <?php echo Html::activeHiddenInput($model[ManageRegistration::TYPE_SUBJECT_AREA], 'default', ['value' => ManageRegistration::DEFAULT_ADDED]); ?>
         </div>
     </div>
-	<?php echo CHtml::endForm(); ?>
+	<?php echo Html::endForm(); ?>
 </div>
 
 <hr class="hr-spacer">
 <script>
-    var urlDelete = '<?= Yii::app()->createUrl("/registration/registration/deleteSubjectItem"); ?>';
+    var urlDelete = '<?= Url::toRoute("/registration/registration/deleteSubjectItem"); ?>';
 </script>
 

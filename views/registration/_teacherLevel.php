@@ -1,6 +1,14 @@
-<?php 
-$flag = HSetting::model()->find('name = "type_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_TEACHER_LEVEL]. '"')->value_text;
-$required = HSetting::model()->find('name = "required_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_TEACHER_LEVEL]. '"')->value_text;
+<?php
+
+use humhub\models\Setting;
+use humhub\modules\registration\models\ManageRegistration;
+use yii\helpers\Url;
+use yii\helpers\Html;
+
+?>
+<?php
+$flag = Setting::find()->andWhere('name = "type_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_TEACHER_LEVEL]. '"')->one()->value_text;
+$required = Setting::find()->andWhere('name = "required_manage" AND value="'.ManageRegistration::$type[ManageRegistration::TYPE_TEACHER_LEVEL]. '"')->one()->value_text;
 ?>
 <h4>Teacher Level</h4>
 
@@ -12,7 +20,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
         <div class="col-xs-6 no-padding">
             <div class="checkbox regular-checkbox-container pull-right checkbox-required">
                 <label>
-                    <a href='<?= $this->createUrl('required', ['required' => ManageRegistration::TYPE_TEACHER_LEVEL]) ?>' data-method='post'>
+                    <a href='<?= Url::toRoute(['required', 'required' => ManageRegistration::TYPE_TEACHER_LEVEL]) ?>' data-method='post'>
                         <input class="regular-checkbox" type='checkbox' <?= $required?"checked":"" ?> value="checkbox-required-teacherlevel" <?= $required?"checked":"" ?>/> required field
                         <div class="regular-checkbox-box"></div>
                     </a>
@@ -34,10 +42,10 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
                             echo '<tr class="ui-sortable" data-item="item_'.$object->id.'">
                                     <td  style="z-index:99999;">
                                         <i class="fa fa-bars dragdrop"></i>
-                                        <span class="m_item" data-pk="' . $object->id . '" data-url="' . $this->createUrl('edit') . '">'.$object->name.'</span>
+                                        <span class="m_item" data-pk="' . $object->id . '" data-url="' . Url::toRoute('edit') . '">'.$object->name.'</span>
                                     </td>
                                     <td>
-                                        <a class="btn btn-danger btn-xs tt close" title="delete" href="' . $this->createUrl('delete', ['id' => $object->id]) . '">
+                                        <a class="btn btn-danger btn-xs tt close" title="delete" href="' . Url::toRoute(['delete', 'id' => $object->id]) . '">
                                             <i class="fa fa-times"></i>
                                         </a>
                                     </td>
@@ -67,16 +75,16 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
 
           
 <div class="form form-registration-items">
-    <?php echo CHtml::beginForm(['action' => '', 'method' => 'post']); ?>
-    <?php echo CHtml::activeHiddenField($model[ManageRegistration::TYPE_TEACHER_LEVEL], 'type', ['value' => ManageRegistration::TYPE_TEACHER_LEVEL]); ?>
-    <?php echo CHtml::activeHiddenField($model[ManageRegistration::TYPE_TEACHER_LEVEL], 'default', ['value' => ManageRegistration::DEFAULT_ADDED]); ?>
+    <?php echo Html::beginForm('', 'POST'); ?>
+    <?php echo Html::activeHiddenInput($model[ManageRegistration::TYPE_TEACHER_LEVEL], 'type', ['value' => ManageRegistration::TYPE_TEACHER_LEVEL]); ?>
+    <?php echo Html::activeHiddenInput($model[ManageRegistration::TYPE_TEACHER_LEVEL], 'default', ['value' => ManageRegistration::DEFAULT_ADDED]); ?>
     <div class="row controls">
         <div class="col-xs-12">
-                <?php echo CHtml::errorSummary($model[ManageRegistration::TYPE_TEACHER_LEVEL], '', ''); ?>
+            <?php echo Html::errorSummary($model[ManageRegistration::TYPE_TEACHER_LEVEL], ['header' => '', 'style'=> 'color:red']); ?>
         </div>
         <div class="col-sm-6">
-            <?php echo CHtml::activeTextField($model[ManageRegistration::TYPE_TEACHER_LEVEL], 'name', array('class' => 'form-control input-sm', 'placeholder' => 'Enter item name',)); ?>
-            <button type="submit" name="btn" class="btn btn-primary btn-sm">
+            <?php echo Html::activeTextInput($model[ManageRegistration::TYPE_TEACHER_LEVEL], 'name', array('class' => 'form-control input-sm', 'placeholder' => 'Enter item name',)); ?>
+            <button type="submit" class="btn btn-primary btn-sm">
                 <i class="fa fa-plus"></i> add item
             </button>
         </div>
@@ -84,7 +92,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
         <div class="col-sm-6">
         	<div class="checkbox regular-checkbox-container pull-right">
                 <label>
-                    <a href='<?= $this->createUrl('type', ['type' => ManageRegistration::TYPE_TEACHER_LEVEL]) ?>' data-method='post'>
+                    <a href='<?= Url::toRoute(['type', 'type' => ManageRegistration::TYPE_TEACHER_LEVEL]) ?>' data-method='post'>
                         <input class="regular-checkbox" type='checkbox' <?= $flag?"checked":"" ?>/> add 'other' option to list
                         <div class="regular-checkbox-box"></div>
                     </a>
@@ -93,7 +101,7 @@ $required = HSetting::model()->find('name = "required_manage" AND value="'.Manag
             </div>
         </div>
     </div>
-	<?php echo CHtml::endForm(); ?>
+	<?php echo Html::endForm(); ?>
 </div>
 
 <hr class="hr-spacer">

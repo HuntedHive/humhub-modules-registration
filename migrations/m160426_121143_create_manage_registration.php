@@ -1,6 +1,9 @@
 <?php
 
-class m160426_121143_create_manage_registration extends EDbMigration
+use humhub\models\Setting;
+use humhub\modules\registration\models\ManageRegistration;
+
+class m160426_121143_create_manage_registration extends \yii\db\Migration
 {
 	public function up()
 	{
@@ -15,11 +18,9 @@ class m160426_121143_create_manage_registration extends EDbMigration
 			'updated_by' => 'int(11) NOT NULL',
 		], ''
 		);
-
-		Yii::import("application.modules.registration.models.ManageRegistration");
 		foreach (ManageRegistration::$type as $key => $value) {
-			if(empty(HSetting::model()->find("name='type_manage' AND value = '$value'"))) {
-				$setting = new HSetting;
+			if(empty(Setting::find()->andWhere(["name" => 'type_manage'])->andWhere(['value' => $value])->one())) {
+				$setting = new Setting;
 				$setting->name = "type_manage";
 				$setting->value = $value;
 				$setting->value_text = 0;

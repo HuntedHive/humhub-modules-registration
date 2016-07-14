@@ -1,6 +1,8 @@
 <?php
 
-class m160610_145153_manage_file_add extends EDbMigration
+use humhub\models\Setting;
+
+class m160610_145153_manage_file_add extends \yii\db\Migration
 {
 	public function up()
 	{
