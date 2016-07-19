@@ -212,10 +212,7 @@ class RegistrationController extends Controller
             $i=0;
             foreach ($_POST['data'] as $item_id) {
                 $i--;
-                $criteria = new CDbCriteria;
-                $criteria->addCondition('type='. $_POST['type']);
-                $criteria->addCondition('id='. $item_id);
-                ManageRegistration::updateAll(array('updated_at' => time() + $i), $criteria);
+                ManageRegistration::updateAll(array('updated_at' => time() + $i), ['type' => $_POST['type'], 'id' => $item_id]);
             }
         } else {
             echo "Erorr of data sorting";
