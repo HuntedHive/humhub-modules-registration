@@ -108,16 +108,18 @@ class RegistrationController extends Controller
                 if(strtolower($_POST['ManageRegistration']['name']) != "other") {
                     if($_POST['ManageRegistration']['type'] == ManageRegistration::TYPE_TEACHER_TYPE) {
                         $path = Yii::getAlias("@webroot") . "/uploads/file/";
-                        $model[$_POST['ManageRegistration']['type']]->file = UploadedFile::getInstance($model[$_POST['ManageRegistration']['type']], 'file');
-                        if (!empty($model[$_POST['ManageRegistration']['type']]->file)) {
-                            $_POST['ManageRegistration']["file_name"] = $model[$_POST['ManageRegistration']['type']]->file->name;
-                            $_POST['ManageRegistration']["file_path"] = $path;
-                            $model[$_POST['ManageRegistration']['type']]->load($_POST);
+                        $file = UploadedFile::getInstance($model[$_POST['ManageRegistration']['type']], 'file');
+                        if (!empty($file)) {
+                            $model[$_POST['ManageRegistration']['type']]->load(Yii::$app->request->post());
+                            $model[$_POST['ManageRegistration']['type']]->file = $file;
+                            $model[$_POST['ManageRegistration']['type']]->file_name = $model[$_POST['ManageRegistration']['type']]->file->name;
+                            $model[$_POST['ManageRegistration']['type']]->file_path = $path;
+
                             $model[$_POST['ManageRegistration']['type']]->save();
                             if (!$model[$_POST['ManageRegistration']['type']]->hasErrors()) {
+                                $model[$_POST['ManageRegistration']['type']]->file->saveAs($path . $model[$_POST['ManageRegistration']['type']]->file->name);
                                 return $this->redirect(Url::toRoute("/registration/registration/index"));
                             }
-                            $model[$_POST['ManageRegistration']['type']]->file->saveAs($path . $model[$_POST['ManageRegistration']['type']]->file->name);
                         } else {
                             $model[$_POST['ManageRegistration']['type']]->addError("file", "File not upload");
                         }
