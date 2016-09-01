@@ -88,7 +88,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
     <?php echo Html::beginForm('', 'post'); ?>
     <div class="row controls">
 
-        <div class="col-md-8 selectpicker-tags">
+        <div class="col-xs-6 selectpicker-tags">
             <?php echo Html::activeTextInput($model[ManageRegistration::TYPE_SUBJECT_AREA], 'name', array('class' => 'form-control input-sm pull-left', 'placeholder' => 'Enter item name',)); ?>
             <!-- Existing Selectbox <?php echo Html::activeDropDownList($model[ManageRegistration::TYPE_SUBJECT_AREA], 'depend', ManageRegistration::getTeachetTypeDropDownList() , array('class' => 'form-control input-sm selectpicker show-tick pull-left')); ?> -->
             <select name="ManageRegistration[subjectarea][]" class="selectpicker form-control show-tick input-sm pull-left" multiple title="Select related teacher type(s)...">
@@ -113,7 +113,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
             <div class="clearfix"></div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-xs-6">
         	<div class="checkbox regular-checkbox-container pull-right">
                 <label>
                     <a href='<?= Url::toRoute('type', ['type' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
@@ -137,6 +137,6 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
 
 <hr class="hr-spacer">
 <script>
-    var urlDelete = '<?= Url::toRoute("/registration/registration/deleteSubjectItem"); ?>';
+    var urlDelete = '<?= Url::toRoute("/registration/registration/delete-subject-item"); ?>';
 </script>
 

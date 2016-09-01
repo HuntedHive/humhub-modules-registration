@@ -21,11 +21,14 @@ use yii\helpers\Url;
                 var type = $(this).data('type');
                 var items = new Array();
                 var data = sort[0].children;
-
+                var item;
                 for(var i=0; i<data.length;i++) {
-                    items[i] = (data[i].dataset.item).split('_')[1];
+                    item = data[i].dataset.item;
+                    if(item != undefined && item != "other") {
+                        console.log(item);
+                        items[i] = item.split('_')[1];
+                    }
                 }
-                console.log(items);
                 $.ajax({
                     type: 'POST',
                     url: '<?= Url::toRoute("/registration/registration/sort") ?>',

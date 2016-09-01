@@ -38,7 +38,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
             <tbody class='c_items' data-type="<?= ManageRegistration::TYPE_TEACHER_TYPE ?>">
             <?php
             $other = false;
-            if (empty($objects)) {
+            if (empty($objects) || count($objects) == 1) {
                 echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
             } else {
                 foreach ($objects as $object) {
@@ -57,7 +57,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
                     $obj = ManageRegistration::find()->andWhere('type=1 AND `default`=0')->one();
                     if(empty($obj)) {
                         $obj = new ManageRegistration();
-                        $obj->name = 'others';
+                        $obj->name = 'othersFildn';
                         $obj->type = ManageRegistration::TYPE_TEACHER_TYPE;
                         $obj->default = ManageRegistration::DEFAULT_DEFAULT;
                         $obj->save(false);
@@ -96,7 +96,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
         <div class="col-xs-12">
                 <?php echo Html::errorSummary($model[ManageRegistration::TYPE_TEACHER_TYPE], ['header' => '', 'style'=>'color:red']); ?>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-6">
             <?php echo Html::activeTextInput($model[ManageRegistration::TYPE_TEACHER_TYPE], 'name', array('class' => 'form-control input-sm', 'placeholder' => 'Enter item name',)); ?>
             <div class="input-group pull-left apst-field">
                 <?php echo Html::activeFileInput($model[ManageRegistration::TYPE_TEACHER_TYPE], 'file', array('class' => 'filestyle', 'placeholder' => 'Enter item name',)); ?>
@@ -106,7 +106,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
             </button>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-6">
         	<div class="checkbox regular-checkbox-container pull-right">
                 <label>
                     <a href='<?= Url::toRoute(['type', 'type' => ManageRegistration::TYPE_TEACHER_TYPE]) ?>' data-method='post'>
