@@ -72,14 +72,14 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
         <div class="col-xs-12">
                 <?php echo Html::errorSummary($model[ManageRegistration::TYPE_TEACHER_INTEREST], ['header' => '', 'style'=>'color:red']); ?>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 col-xs-12">
             <?php echo Html::activeTextInput($model[ManageRegistration::TYPE_TEACHER_INTEREST], 'name', array('class' => 'form-control input-sm', 'placeholder' => 'Enter item name',)); ?>
             <button type="submit" name="btn" class="btn btn-primary btn-sm">
                 <i class="fa fa-plus"></i> add item
             </button>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-6 col-xs-12">
         	<div class="checkbox regular-checkbox-container pull-right">
                 <label>
                     <a href='<?= Url::toRoute(['type', 'type' => ManageRegistration::TYPE_TEACHER_INTEREST]) ?>' data-method='post'>

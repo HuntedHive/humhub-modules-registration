@@ -18,10 +18,10 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
 	    <div class="col-xs-4 no-padding">
 			<h5><strong>Item Name</strong></h5>
     	</div>
-    	<div class="col-xs-4 no-padding">
+    	<div class="col-xs-3 no-padding">
 			<h5><strong>APSTs</strong></h5>
     	</div>
-        <div class="col-xs-4 no-padding">
+        <div class="col-xs-5 no-padding">
             <div class="checkbox regular-checkbox-container pull-right checkbox-required">
                 <label>
                     <a href='<?= Url::toRoute(['required', 'required' => ManageRegistration::TYPE_TEACHER_TYPE]) ?>' data-method='post'>
@@ -96,7 +96,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
         <div class="col-xs-12">
                 <?php echo Html::errorSummary($model[ManageRegistration::TYPE_TEACHER_TYPE], ['header' => '', 'style'=>'color:red']); ?>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-8">
             <?php echo Html::activeTextInput($model[ManageRegistration::TYPE_TEACHER_TYPE], 'name', array('class' => 'form-control input-sm', 'placeholder' => 'Enter item name',)); ?>
             <div class="input-group pull-left apst-field">
                 <?php echo Html::activeFileInput($model[ManageRegistration::TYPE_TEACHER_TYPE], 'file', array('class' => 'filestyle', 'placeholder' => 'Enter item name',)); ?>
@@ -106,7 +106,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
             </button>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-4">
         	<div class="checkbox regular-checkbox-container pull-right">
                 <label>
                     <a href='<?= Url::toRoute(['type', 'type' => ManageRegistration::TYPE_TEACHER_TYPE]) ?>' data-method='post'>

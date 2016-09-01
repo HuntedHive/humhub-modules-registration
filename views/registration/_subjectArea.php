@@ -18,10 +18,10 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
     	<div class="col-xs-4 no-padding">
 			<h5><strong>Item Name</strong></h5>                     
     	</div>
-        <div class="col-xs-4 no-padding">
+        <div class="col-xs-3 no-padding">
             <h5><strong>Relates to Teacher Types</strong></h5>
         </div>
-        <div class="col-xs-4 no-padding">
+        <div class="col-xs-5 no-padding">
             <div class="checkbox regular-checkbox-container pull-right checkbox-required">
                 <label>
                     <a href='<?= Url::toRoute('required', ['required' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
@@ -88,7 +88,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
     <?php echo Html::beginForm('', 'post'); ?>
     <div class="row controls">
 
-        <div class="col-xs-6 selectpicker-tags">
+        <div class="col-sm-8 col-xs-12 selectpicker-tags">
             <?php echo Html::activeTextInput($model[ManageRegistration::TYPE_SUBJECT_AREA], 'name', array('class' => 'form-control input-sm pull-left', 'placeholder' => 'Enter item name',)); ?>
             <!-- Existing Selectbox <?php echo Html::activeDropDownList($model[ManageRegistration::TYPE_SUBJECT_AREA], 'depend', ManageRegistration::getTeachetTypeDropDownList() , array('class' => 'form-control input-sm selectpicker show-tick pull-left')); ?> -->
             <select name="ManageRegistration[subjectarea][]" class="selectpicker form-control show-tick input-sm pull-left" multiple title="Select related teacher type(s)...">
@@ -113,7 +113,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
             <div class="clearfix"></div>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-sm-4 col-xs-12">
         	<div class="checkbox regular-checkbox-container pull-right">
                 <label>
                     <a href='<?= Url::toRoute('type', ['type' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
