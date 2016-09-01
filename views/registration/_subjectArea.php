@@ -24,7 +24,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
         <div class="col-xs-5 no-padding">
             <div class="checkbox regular-checkbox-container pull-right checkbox-required">
                 <label>
-                    <a href='<?= Url::toRoute('required', ['required' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
+                    <a href='<?= Url::toRoute(['required', 'required' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
                         <input class="regular-checkbox" type='checkbox' value="checkbox-required-subjectarea" <?= $required?"checked":"" ?>/> required field
                         <div class="regular-checkbox-box"></div>
                     </a>
@@ -116,7 +116,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
         <div class="col-sm-4 col-xs-12">
         	<div class="checkbox regular-checkbox-container pull-right">
                 <label>
-                    <a href='<?= Url::toRoute('type', ['type' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
+                    <a href='<?= Url::toRoute(['type', 'type' => ManageRegistration::TYPE_SUBJECT_AREA]) ?>' data-method='post'>
                         <input class="regular-checkbox" type='checkbox' <?= $flag?"checked":"" ?>/> add 'other' option to list
                         <div class="regular-checkbox-box"></div>
                     </a>
