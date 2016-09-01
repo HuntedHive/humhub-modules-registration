@@ -143,8 +143,7 @@ class RegistrationController extends Controller
         $levels = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_LEVEL])->orderBy(['updated_at' => SORT_DESC])->all();
         $types = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_TYPE])->orderBy(['updated_at' => SORT_DESC])->all();
         $subjects = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_SUBJECT_AREA])->andFilterWhere(['`default`' => !$setting[ManageRegistration::TYPE_SUBJECT_AREA]->value_text])->orderBy(['updated_at' => SORT_DESC])->groupBy('name')->all();
-        $interests = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_INTEREST])->andFilterWhere(['`default`' => !$setting[ManageRegistration::TYPE_TEACHER_INTEREST]->value_text])->orderBy(['updated_at' => SORT_DESC])->groupBy('name')->all();
-
+        $interests = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_INTEREST])->orderBy(['updated_at' => SORT_DESC])->all();
         return $this->render('index', [
             'levels' => $levels,
             'types' => $types,
