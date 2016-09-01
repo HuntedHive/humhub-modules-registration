@@ -37,8 +37,9 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
         <table class="table table-hover">    
             <tbody class="c_items" data-type="<?= ManageRegistration::TYPE_SUBJECT_AREA ?>">
 				<?php
+
                 $other = false;
-                if (empty($objects)) {
+                if (empty($objects) && !$flag) {
                     echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
                 } else {
                     foreach ($objects as $subject) {
@@ -54,7 +55,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
                             . ManageRegistration::getDependNames($subject->name, $subject->type) .
                             '</td>
                                 <td class="col-sm-2">
-                                    <a class="btn btn-danger btn-xs tt close" title="delete" href="' . Url::toRoute('deleteSubject', ['name' => $subject->name]) . '">
+                                    <a class="btn btn-danger btn-xs tt close" title="delete" href="' . Url::toRoute(['delete-subject', 'name' => $subject->name]) . '">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>

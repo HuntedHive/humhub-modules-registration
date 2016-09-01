@@ -34,7 +34,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
             <tbody class='c_items' data-type="<?= ManageRegistration::TYPE_TEACHER_INTEREST ?>">
             <?php
             $other = false;
-            if (empty($objects)) {
+            if (empty($objects) && !$flag) {
                 echo '<tr><td class="empty"><span class="empty">Add items to the list.</span></td></tr>';
             } else {
                 foreach ($objects as $object) {

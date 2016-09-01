@@ -114,6 +114,7 @@ class RegistrationController extends Controller
                             $model[$_POST['ManageRegistration']['type']]->file = $file;
                             $model[$_POST['ManageRegistration']['type']]->file_name = $model[$_POST['ManageRegistration']['type']]->file->name;
                             $model[$_POST['ManageRegistration']['type']]->file_path = $path;
+                            $model[$_POST['ManageRegistration']['type']]->default = ManageRegistration::DEFAULT_ADDED;
 
                             $model[$_POST['ManageRegistration']['type']]->save();
                             if (!$model[$_POST['ManageRegistration']['type']]->hasErrors()) {
@@ -140,10 +141,11 @@ class RegistrationController extends Controller
 
 
         }
-        $levels = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_LEVEL])->orderBy(['updated_at' => SORT_DESC])->all();
-        $types = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_TYPE])->orderBy(['updated_at' => SORT_DESC])->all();
-        $subjects = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_SUBJECT_AREA])->andFilterWhere(['`default`' => !$setting[ManageRegistration::TYPE_SUBJECT_AREA]->value_text])->orderBy(['updated_at' => SORT_DESC])->groupBy('name')->all();
-        $interests = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_INTEREST])->orderBy(['updated_at' => SORT_DESC])->all();
+        $levels = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_LEVEL])->andFilterWhere(['`default`' => ManageRegistration::DEFAULT_ADDED])->orderBy(['updated_at' => SORT_DESC])->all();
+        $types = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_TYPE])->andFilterWhere(['`default`' => ManageRegistration::DEFAULT_ADDED])->orderBy(['updated_at' => SORT_DESC])->all();
+        $subjects = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_SUBJECT_AREA])->andFilterWhere(['`default`' => ManageRegistration::DEFAULT_ADDED])->orderBy(['updated_at' => SORT_DESC])->groupBy('name')->all();
+        $interests = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_INTEREST])->andFilterWhere(['`default`' => ManageRegistration::DEFAULT_ADDED])->orderBy(['updated_at' => SORT_DESC])->all();
+        
         return $this->render('index', [
             'levels' => $levels,
             'types' => $types,
