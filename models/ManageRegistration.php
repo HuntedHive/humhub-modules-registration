@@ -62,14 +62,14 @@ class ManageRegistration extends ActiveRecord
         // will receive user inputs.
         return array(
             array(['name', 'type', 'default'], 'required'),
-            [['file_name', 'name'], 'unique'],
+            [['file_name'], 'unique'],
+            ['name','uniqueMethod'],
             array(['name'], 'string', 'max' => 100),
             [['file_name', 'file_path'], 'string'],
             array(['file_name'], 'string', 'max' => 255),
             array(['file_path'], 'string', 'max' => 255),
             array('file', 'file', 'extensions'=>'xlsx, ods'),
             array('apstsfile', 'file', 'extensions'=> 'xlsx, ods', 'skipOnEmpty'=>true),
-            ['name','uniqueMethod'],
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array(array('depend', 'file_name', 'file_path'), 'safe'),
@@ -78,7 +78,7 @@ class ManageRegistration extends ActiveRecord
 
     public function uniqueMethod()
     {
-        $data = $this->find()->andWhere(['type' => $this->type])->andWhere(["name" => trim($this->name)])->one();
+        $data = $this->find()->andWhere(['type' => $this->type])->andWhere(["name" => trim($this->name)])->andWhere(["default" => self::DEFAULT_ADDED])->one();
         if (!empty($data)) {
             $this->addError("name", "Item name must be unique");
         }
