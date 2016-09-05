@@ -130,9 +130,10 @@ class RegistrationController extends Controller
                         } else {
                             $model[$_POST['ManageRegistration']['type']]->load(Yii::$app->request->post());
                             $model[$_POST['ManageRegistration']['type']]->save();
-                            return $this->redirect(Url::toRoute("/registration/registration/index"));
+                            if(!$model[$_POST['ManageRegistration']['type']]->hasErrors()) {
+                                return $this->redirect(Url::toRoute("/registration/registration/index"));
+                            }
                         }
-
                     }
                 } else {
                     $model[$_POST['ManageRegistration']['type']]->addError("name", "Not valid data");

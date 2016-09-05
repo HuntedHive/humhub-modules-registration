@@ -42,7 +42,6 @@ $(document).ready(function(){
         var id = $(this).data('id');
         var input = "<input name='apsts_id' value='"+id+"' hidden>";
         var type = $(this).data('type');
-            console.log(type);
         $("#editAPST .append-teacher-type").html(type);
         $("#editAPST .bootstrap-filestyle input[type=text]").val(name);
         $(".APSTS_id").empty();
@@ -67,7 +66,6 @@ $(document).ready(function(){
                 if(data == 1) {
                    window.location.href = "";
                 } else {
-                    console.log(1234);
                     $("#editAPST .errorBlock").html("Browse file");
                 }
             }
