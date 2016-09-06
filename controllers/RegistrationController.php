@@ -19,6 +19,15 @@ class RegistrationController extends Controller
 {
     public $subLayout = "@humhub/modules/admin/views/layouts/main";
 
+    public function behaviors()
+    {
+        return [
+            'acl' => [
+                'class' => \humhub\components\behaviors\AccessControl::className(),
+            ]
+        ];
+    }
+
     /**
      * @return array action filters
      */
