@@ -3,6 +3,7 @@
 namespace humhub\modules\registration\controllers;
 
 use humhub\models\Setting;
+use humhub\modules\evidence\models\StateRecord;
 use humhub\modules\user\models\Profile;
 use yii\db\Expression;
 use yii\helpers\Url;
@@ -281,6 +282,8 @@ class RegistrationController extends Controller
                 $reg->default = ManageRegistration::DEFAULT_DEFAULT;
                 $reg->save(false);
             }
+
+            StateRecord::saveStateTeacherType();
             return true;
         }
 
