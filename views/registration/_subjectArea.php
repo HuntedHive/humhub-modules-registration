@@ -47,7 +47,7 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="'.Man
                         echo '<tr class="ui-sortable" data-item="item_' . $subject->id . '">
                                 <td class="col-sm-4" style="z-index:1000;">
                                     <i class="fa fa-bars dragdrop"></i>
-                                    <span class="m_item" data-pk="' . $subject->id . '" data-url="' . Url::toRoute('editSubject') . '" data-name="' . $subject->name . '">
+                                    <span class="m_item" data-pk="' . $subject->id . '" data-url="' . Url::toRoute('edit-subject') . '" data-name="' . $subject->name . '">
                                         ' . $subject->name . '
                                     </span>
                                 </td>
