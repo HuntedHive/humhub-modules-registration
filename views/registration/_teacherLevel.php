@@ -44,7 +44,16 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="' . M
             } else {
                 foreach ($objects as $object) {
                     if ((bool)$object->default) {
-                        echo '<tr class="ui-sortable" data-item="item_' . $object->id . '"><td  style="z-index:99999;"><i class="fa fa-bars dragdrop"></i><span class="m_item" data-pk="' . $object->id . '" data-url="' . Url::toRoute('edit') . '">' . $object->name . '</span></td><td class="apsts_file"><div class="pull-left">' . $object->file_name . '</div><div class="file_edit" data-id="' . $object->id . '" data-name="' . $object->file_name . '" data-type="' . trim($object->name) . '"><i class="fa fa-pencil"></i>edit</div></td><td><a class="btn btn-danger btn-xs tt close" title="delete" href="' . Url::toRoute(['delete', 'id' => $object->id]) . '"><i class="fa fa-times"></i></a></td></tr>';
+                        echo '<tr class="ui-sortable" data-item="item_' . $object->id . '">
+                                <td  style="z-index:99999;">
+                                <i class="fa fa-bars dragdrop"></i>
+                                <span class="m_item" data-pk="' . $object->id . '" data-url="' . Url::toRoute('edit') . '">' . $object->name . '</span>
+                                </td>
+                                <td class="apsts_file"><div class="pull-left">' . $object->file_name . '</div>
+                                <div class="file_edit" data-id="' . $object->id . '" data-name="' . $object->file_name . '" data-type="' . trim($object->name) . '">
+                                <i class="fa fa-pencil"></i>'.(empty($object->file_name) ? "Add APSTs" : "edit").'</div></td>
+                                <td><a class="btn btn-danger btn-xs tt close" title="delete" href="' . Url::toRoute(['delete', 'id' => $object->id]) . '">
+                                <i class="fa fa-times"></i></a></td></tr>';
                     } else {
                         $other = true;
                     }
@@ -65,7 +74,12 @@ $required = Setting::find()->andWhere('name = "required_manage" AND value="' . M
                 }
 
                 if (!empty($obj)) {
-                    $tdEdit = '<td class="apsts_file"><div class="pull-left">' . $obj->file_name . '</div><div class="file_edit" data-id="' . $obj->getPrimaryKey() . '" data-name="' . $obj->file_name . '" data-type="' . trim($obj->name) . '"><i class="fa fa-pencil"></i>' . (empty($obj->file_name) ? "Add APSTs" : "edit") . '</div></td>';
+                    $tdEdit = '<td class="apsts_file"><div class="pull-left">' .
+                        $obj->file_name . '</div><div class="file_edit" data-id="' .
+                        $obj->getPrimaryKey() . '" data-name="' . $obj->file_name .
+                        '" data-type="' . trim($obj->name) . '">
+                        <i class="fa fa-pencil"></i>' .
+                        (empty($obj->file_name) ? "Add APSTs" : "edit") . '</div></td>';
                 } else {
                     // $tdEdit = '<td class="apsts_file" data-name="other"><div class="file_edit"><i class="fa fa-pencil"></i>add apsts</div></td>';
                 }
