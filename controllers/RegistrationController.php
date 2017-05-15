@@ -58,7 +58,7 @@ class RegistrationController extends Controller
      */
     public function filters()
     {
-        return array (
+        return array(
             'accessControl', // perform access control for CRUD operations
         );
     }
@@ -76,7 +76,7 @@ class RegistrationController extends Controller
             ),
             array('allow',
                 'users' => array('@'),
-                'actions'=>array('updateUserTeacherType'),
+                'actions' => array('updateUserTeacherType'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -86,22 +86,22 @@ class RegistrationController extends Controller
 
     public function actionIndex()
     {
-        $model  = [];
+        $model = [];
         $keys = array_keys(ManageRegistration::$type);
         $setting = [];
-            foreach ($keys as $key) {
+        foreach ($keys as $key) {
             $model[$key] = new ManageRegistration;
         }
 
-        foreach(ManageRegistration::$type as $key => $value) {
-            $setting[$key] = Setting::find()->andWhere(['value' => $value])->andWhere(['name'=>'type_manage'])->one();
+        foreach (ManageRegistration::$type as $key => $value) {
+            $setting[$key] = Setting::find()->andWhere(['value' => $value])->andWhere(['name' => 'type_manage'])->one();
         }
 
         if (\Yii::$app->request->isPost && !empty($_POST['ManageRegistration'])) {
-            if($_POST['ManageRegistration']['type'] == ManageRegistration::TYPE_SUBJECT_AREA) {
-                if(!empty($_POST['ManageRegistration']['subjectarea']) && is_array($_POST['ManageRegistration']['subjectarea']) && !empty($_POST['ManageRegistration']['name'])) {
+            if ($_POST['ManageRegistration']['type'] == ManageRegistration::TYPE_SUBJECT_AREA) {
+                if (!empty($_POST['ManageRegistration']['subjectarea']) && is_array($_POST['ManageRegistration']['subjectarea']) && !empty($_POST['ManageRegistration']['name'])) {
                     foreach ($_POST['ManageRegistration']['subjectarea'] as $select) {
-                        if($select == "other") {
+                        if ($select == "other") {
                             $m_reg1 = new ManageRegistration;
                             $m_reg1->name = $select;
                             $m_reg1->default = ManageRegistration::DEFAULT_ADDED;
@@ -129,18 +129,18 @@ class RegistrationController extends Controller
                     }
                     return $this->redirect(Url::toRoute("/registration/registration/index"));
                 } else {
-                    if(empty($_POST['ManageRegistration']['name'])) {
+                    if (empty($_POST['ManageRegistration']['name'])) {
                         $model[$_POST['ManageRegistration']['type']]->addError("name", "Enter name");
                     }
 
-                    if(empty($_POST['ManageRegistration']['subjectarea'])) {
+                    if (empty($_POST['ManageRegistration']['subjectarea'])) {
                         $model[$_POST['ManageRegistration']['type']]->addError("name", "Empty select data");
                     }
                 }
 
             } else {
-                if(strtolower($_POST['ManageRegistration']['name']) != "other") {
-                    if($_POST['ManageRegistration']['type'] == ManageRegistration::TYPE_TEACHER_TYPE) {
+                if (strtolower($_POST['ManageRegistration']['name']) != "other") {
+                    if ($_POST['ManageRegistration']['type'] == ManageRegistration::TYPE_TEACHER_LEVEL) {
                         $path = Yii::getAlias("@webroot") . "/uploads/file/";
                         $file = UploadedFile::getInstance($model[$_POST['ManageRegistration']['type']], 'file');
                         if (!empty($file)) {
@@ -156,31 +156,29 @@ class RegistrationController extends Controller
                                 return $this->redirect(Url::toRoute("/registration/registration/index"));
                             }
                         } else {
-                            $model[$_POST['ManageRegistration']['type']]->addError("file", "File not upload");
+                            $model[$_POST['ManageRegistration']['level']]->addError("file", "File not upload");
                         }
                     } else {
-                        if(empty($_POST['ManageRegistration']['name'])) {
-                            $model[$_POST['ManageRegistration']['type']]->addError("file", "Enter name");
+                        if (empty($_POST['ManageRegistration']['name'])) {
+                            $model[$_POST['ManageRegistration']['level']]->addError("file", "Enter name");
                         } else {
                             $model[$_POST['ManageRegistration']['type']]->load(Yii::$app->request->post());
                             $model[$_POST['ManageRegistration']['type']]->save();
-                            if(!$model[$_POST['ManageRegistration']['type']]->hasErrors()) {
+                            if (!$model[$_POST['ManageRegistration']['type']]->hasErrors()) {
                                 return $this->redirect(Url::toRoute("/registration/registration/index"));
                             }
                         }
                     }
                 } else {
-                    $model[$_POST['ManageRegistration']['type']]->addError("name", "Not valid data");
+                    $model[$_POST['ManageRegistration']['level']]->addError("name", "Not valid data");
                 }
             }
-
-
         }
         $levels = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_LEVEL])->andFilterWhere(['`default`' => ManageRegistration::DEFAULT_ADDED])->orderBy(['updated_at' => SORT_DESC])->all();
         $types = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_TYPE])->andFilterWhere(['`default`' => ManageRegistration::DEFAULT_ADDED])->orderBy(['updated_at' => SORT_DESC])->all();
         $subjects = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_SUBJECT_AREA])->andFilterWhere(['`default`' => ManageRegistration::DEFAULT_ADDED])->orderBy(['updated_at' => SORT_DESC])->groupBy('name')->all();
         $interests = ManageRegistration::find()->andWhere(['type' => ManageRegistration::TYPE_TEACHER_INTEREST])->andFilterWhere(['`default`' => ManageRegistration::DEFAULT_ADDED])->orderBy(['updated_at' => SORT_DESC])->all();
-        
+
         return $this->render('index', [
             'levels' => $levels,
             'types' => $types,
@@ -194,17 +192,17 @@ class RegistrationController extends Controller
     public function actionType($type)
     {
         $model = Setting::find()->andWhere(['name' => 'type_manage'])->andWhere(['value' => ManageRegistration::$type[$type]])->one();
-        Setting::updateAll(['value_text' => !$model->value_text?1:0], 'name = "type_manage" AND value="'.ManageRegistration::$type[$type]. '"');
+        Setting::updateAll(['value_text' => !$model->value_text ? 1 : 0], 'name = "type_manage" AND value="' . ManageRegistration::$type[$type] . '"');
         $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function actionRequired($required)
     {
         $model = Setting::find()->andWhere(['name' => 'required_manage'])->andWhere(['value' => ManageRegistration::$type[$required]])->one();
-        Setting::updateAll(['value_text' => !$model->value_text?1:0], 'name = "required_manage" AND value="'.ManageRegistration::$type[$required]. '"');
+        Setting::updateAll(['value_text' => !$model->value_text ? 1 : 0], 'name = "required_manage" AND value="' . ManageRegistration::$type[$required] . '"');
         $this->redirect($_SERVER['HTTP_REFERER']);
     }
-    
+
     public function actionEdit()
     {
         if (isset($_POST['pk']) && isset($_POST['value'])) {
@@ -222,16 +220,16 @@ class RegistrationController extends Controller
         if (isset($_POST['value'])) {
             $value = $_POST['value'];
             $lastValue = $_POST['name'];
-            ManageRegistration::updateAll(['name' => $value], ' type='. ManageRegistration::TYPE_SUBJECT_AREA. ' AND name="' .$lastValue. '"');
+            ManageRegistration::updateAll(['name' => $value], ' type=' . ManageRegistration::TYPE_SUBJECT_AREA . ' AND name="' . $lastValue . '"');
         } else {
             echo "Error of data editing";
         }
     }
-    
+
     public function actionDelete($id)
     {
         ManageRegistration::findOne($id)->delete();
-        $expression = new Expression('depend='. $id);
+        $expression = new Expression('depend=' . $id);
         ManageRegistration::deleteAll($expression);
         $this->redirect($_SERVER['HTTP_REFERER']);
     }
@@ -239,16 +237,16 @@ class RegistrationController extends Controller
     public function actionDeleteSubject($name)
     {
 //        $selectSubject = CHtml::listData(ManageRegistration::model()->findAll('name="'. $name . '" AND type='. ManageRegistration::TYPE_SUBJECT_AREA), "depend", "depend");
-        $expression = new Expression("name='". $name."' AND type=". ManageRegistration::TYPE_SUBJECT_AREA);
+        $expression = new Expression("name='" . $name . "' AND type=" . ManageRegistration::TYPE_SUBJECT_AREA);
         ManageRegistration::deleteAll($expression);
 //        ManageRegistration::model()->deleteAll("id IN(". implode(",", $selectSubject) .") AND type=". ManageRegistration::TYPE_TEACHER_OTHER);
         $this->redirect($_SERVER['HTTP_REFERER']);
     }
-    
+
     public function actionSort()
     {
         if (isset($_POST['data']) && isset($_POST['type'])) {
-            $i=0;
+            $i = 0;
             foreach ($_POST['data'] as $item_id) {
                 $i--;
                 ManageRegistration::updateAll(array('updated_at' => time() + $i), ['type' => $_POST['type'], 'id' => $item_id]);
@@ -257,10 +255,10 @@ class RegistrationController extends Controller
             echo "Erorr of data sorting";
         }
     }
-    
+
     public function actionDeleteSubjectItem()
     {
-        if(isset($_POST['dataId']) && isset($_POST['dataDepend'])) {
+        if (isset($_POST['dataId']) && isset($_POST['dataDepend'])) {
             ManageRegistration::find()->andWhere(['id' => $_POST['dataId']])->one()->delete();
             echo true;
         }
@@ -270,7 +268,7 @@ class RegistrationController extends Controller
 
     public function actionUpdateApsts()
     {
-        if(!empty($_POST) && !empty($_FILES['ManageRegistration']['size']['apstsfile'])) {
+        if (!empty($_POST) && !empty($_FILES['ManageRegistration']['size']['apstsfile'])) {
             $idType = $_POST['apsts_id'];
             $path = Yii::getAlias("@webroot") . "/uploads/file/";
             $model = ManageRegistration::findOne($idType);
@@ -290,16 +288,16 @@ class RegistrationController extends Controller
 
     public function actionUpdateUserTeacherType()
     {
-        if(isset($_POST['teachertype']) && isset($_POST['teacherTypeOther'])) {
-            $type = !empty($_POST['teacherTypeOther'])?$_POST['teacherTypeOther']:$_POST['teachertype'];
+        if (isset($_POST['teachertype']) && isset($_POST['teacherTypeOther'])) {
+            $type = !empty($_POST['teacherTypeOther']) ? $_POST['teacherTypeOther'] : $_POST['teachertype'];
             $profile = Profile::find()->andWhere(['user_id' => Yii::$app->user->id])->one();
-            if(!empty($profile)) {
+            if (!empty($profile)) {
                 $profile->teacher_type = $type;
                 $profile->save();
             }
 
-            $registration = ManageRegistration::find()->andWhere(['name' =>$type])->andWhere(['`default`' => 0])->one();
-            if(empty($registration)) {
+            $registration = ManageRegistration::find()->andWhere(['name' => $type])->andWhere(['`default`' => 0])->one();
+            if (empty($registration)) {
                 $reg = new ManageRegistration();
                 $reg->name = $type;
                 $reg->type = ManageRegistration::TYPE_TEACHER_TYPE;
